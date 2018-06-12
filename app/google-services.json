@@ -1,0 +1,59 @@
+{
+  "project_info": {
+    "project_number": "61259960456",
+    "firebase_url": "https://fortnitepro-20631.firebaseio.com",
+    "project_id": "fortnitepro-20631",
+    "storage_bucket": "fortnitepro-20631.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:61259960456:android:f80bb6a06aa4066d",
+        "android_client_info": {
+          "package_name": "com.example.bhunzb.fortnitepro"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "61259960456-bnb7vp64ivr86qiie6c09puuhtdqh83e.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.bhunzb.fortnitepro",
+            "certificate_hash": "46017e7ba081753574e826ee9f4b18a32edf5e4c"
+          }
+        },
+        {
+          "client_id": "61259960456-8itt1qr9chod3qp1iucpfkdi7a3hr8b4.apps.googleusercontent.com",
+          "client_type": 3
+        },
+        {
+          "client_id": "61259960456-8itt1qr9chod3qp1iucpfkdi7a3hr8b4.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBN_CAYup_4havqxoAUASlTF2MrVU4zvRg"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "61259960456-8itt1qr9chod3qp1iucpfkdi7a3hr8b4.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
