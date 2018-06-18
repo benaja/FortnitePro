@@ -1,4 +1,4 @@
-package models;
+package model;
 
 public class StatProperty {
     public String label;
@@ -12,6 +12,8 @@ public class StatProperty {
     public double valueDec;
 
     public double value;
+
+    public int rank;
 
     public int percentile;
 

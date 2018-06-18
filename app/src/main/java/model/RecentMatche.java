@@ -1,4 +1,4 @@
-package models;
+package model;
 
 import java.util.Date;
 
@@ -11,9 +11,11 @@ public class RecentMatche {
 
     public int kills;
 
-    public int minutesPlayet;
+    public int minutesPlayed;
 
     public int top1;
+
+    public int top3;
 
     public int top5;
 

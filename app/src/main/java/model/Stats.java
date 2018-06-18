@@ -1,4 +1,4 @@
-package models;
+package model;
 
 public class Stats {
     public Season p2;
