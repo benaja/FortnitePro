@@ -1,11 +1,8 @@
 package com.example.bhunzb.fortnitepro;
 
-import android.app.Application;
+import android.arch.persistence.room.Database;
 import android.arch.persistence.room.Room;
-import android.content.Context;
-import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.provider.ContactsContract;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.AdapterView;
@@ -28,8 +25,6 @@ import java.util.Map;
 
 import data.AppDatabase;
 import data.Favourite;
-import data.FavouriteDao;
-import data.FavouriteRepository;
 import model.*;
 
 public class MainActivity extends AppCompatActivity {
@@ -57,6 +52,8 @@ public class MainActivity extends AppCompatActivity {
             "Cold War"
     };
 
+    private AppDatabase database;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -64,6 +61,9 @@ public class MainActivity extends AppCompatActivity {
 
         loadPlayers();
 
+        database = Room.databaseBuilder(getApplicationContext(), AppDatabase.class, "fortnite-pro").build();
+
+        List<Favourite> products = App.get().getDB().productDao().getAll();
 
         //getPlayer();
 
@@ -73,11 +73,6 @@ public class MainActivity extends AppCompatActivity {
 
     private void loadPlayers(){
         simpleListView = (ListView)findViewById(R.id.list_view);
-
-
-
-
-
 
 
         List<HashMap<String, String>> list = new ArrayList();
