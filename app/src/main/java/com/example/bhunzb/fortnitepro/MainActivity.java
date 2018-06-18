@@ -1,15 +1,31 @@
 package com.example.bhunzb.fortnitepro;
 
 import android.app.ListActivity;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.widget.ArrayAdapter;
+import android.widget.ListView;
+import android.widget.SimpleAdapter;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 public class MainActivity extends ListActivity {
+    ListView simpleListView;
 
     String[] itemname ={
+            "Safari",
+            "Camera",
+            "Global",
+            "FireFox",
+            "UC Browser",
+            "Android Folder",
+            "VLC Player",
+            "Cold War"
+    };
+
+    String[] description = {
             "Safari",
             "Camera",
             "Global",
@@ -25,9 +41,18 @@ public class MainActivity extends ListActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        this.setListAdapter(new ArrayAdapter<String>(
-                this, R.layout.favourit_list,
-                R.id.Itemname,itemname));
+        simpleListView = (ListView)findViewById(R.id.list_view);
+
+        List<HashMap<String, String>> list = new ArrayList();
+        for(int i = 0; i < itemname.length; i++) {
+            HashMap<String,String> hashMap =  new HashMap();
+            hashMap.put("name", itemname[i]);
+            hashMap.put("description", description[i]);
+            list.add(hashMap);
+        }
+        SimpleAdapter adapter = new SimpleAdapter(this, list, R.layout.favourite_list, new String[] { "name", "description" }, new int[] { R.id.Itemname, R.id.Itemdescription });
+
+        simpleListView.setAdapter(adapter);
     }
 /*
     @Override
