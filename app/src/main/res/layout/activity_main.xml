@@ -7,9 +7,19 @@
     tools:context=".MainActivity">
 
 
+<<<<<<< HEAD
+    <Button
+        android:id="@+id/button2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Button"
+        tools:layout_editor_absoluteX="60dp"
+        tools:layout_editor_absoluteY="121dp" />
+=======
     <ListView
         android:id="@+id/list_view"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent" />
 
+>>>>>>> 9ba5b6b81490ed88092c9b03b0482d72ab9eb350
 </android.support.constraint.ConstraintLayout>

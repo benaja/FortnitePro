@@ -1,6 +1,34 @@
 package com.example.bhunzb.fortnitepro;
 
+<<<<<<< HEAD
 import android.arch.persistence.room.Database;
+=======
+<<<<<<< HEAD
+import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
+import android.support.v4.content.ContextCompat;
+import android.support.v7.app.ActionBar;
+import android.support.v7.app.AppCompatActivity;
+import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
+import android.view.KeyEvent;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.ImageView;
+import android.view.View;
+import android.widget.Toast;
+
+public class MainActivity extends AppCompatActivity{
+    private Menu menu;
+=======
+import android.app.Application;
+>>>>>>> 76ec06db30efe817cc404036924ea62ed747d080
 import android.arch.persistence.room.Room;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -52,12 +80,25 @@ public class MainActivity extends AppCompatActivity {
             "Cold War"
     };
 
+<<<<<<< HEAD
     private AppDatabase database;
 
+=======
+>>>>>>> 9ba5b6b81490ed88092c9b03b0482d72ab9eb350
+>>>>>>> 76ec06db30efe817cc404036924ea62ed747d080
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+<<<<<<< HEAD
+        Button btn = findViewById(R.id.button2);
+        btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(MainActivity.this, SearchActivity.class));
+            }
+        });
+=======
 
         loadPlayers();
 
@@ -135,7 +176,13 @@ public class MainActivity extends AppCompatActivity {
 
 // Add the request to the RequestQueue.
         queue.add(stringRequest);
+>>>>>>> 9ba5b6b81490ed88092c9b03b0482d72ab9eb350
     }
+
+
+
+
+
 /*
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
