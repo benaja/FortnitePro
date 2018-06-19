@@ -41,6 +41,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.ThreadLocalRandom;
+import android.widget.AdapterView.OnItemClickListener;
 
 import model.Profile;
 
@@ -122,7 +123,6 @@ public class MainActivity extends AppCompatActivity {
     private void loadPlayers(){
         Set<String> stringSet = new HashSet<String>();
 
-        simpleListView = (ListView)findViewById(R.id.list_view);
         SharedPreferences favourites = getSharedPreferences("Favourite", 0);
         Set<String> favouritesStringSet = favourites.getStringSet("element", stringSet);
 
@@ -137,13 +137,18 @@ public class MainActivity extends AppCompatActivity {
             imageIds.add(pictures[imagePosition]);
         }
         FavouriteListAdapter adapter = new FavouriteListAdapter(this, names, descriptiones, imageIds);
+
+        simpleListView = (ListView)findViewById(R.id.list_view);
         simpleListView.setAdapter(adapter);
 
+        simpleListView.setOnItemClickListener(new OnItemClickListener() {
 
-        //perform listView item click event
-        simpleListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+            public void onItemClick(AdapterView<?> parent, View view,
+                                    int position, long id) {
+                // TODO Auto-generated method stub
+                String Slecteditem= titles[+position];
+                Toast.makeText(getApplicationContext(), Slecteditem, Toast.LENGTH_SHORT).show();
 
             }
         });
