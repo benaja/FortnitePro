@@ -7,9 +7,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.Toast;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
@@ -29,6 +29,25 @@ public class SingleActivity extends AppCompatActivity {
 
     private String playerName;
     private String platform;
+    private Profile profile;
+
+    int[] statsIds = {
+            R.id.wins,
+            R.id.win_percent,
+            R.id.kills,
+            R.id.kd,
+            R.id.top10,
+            R.id.kills_per_match
+    };
+
+    String[] statsname = {
+            "WINS",
+            "WINS %",
+            "KILLS",
+            "KD",
+            "TOP 10",
+            "KILLS / MATCH"
+    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,9 +81,13 @@ public class SingleActivity extends AppCompatActivity {
         initateContent();
     }
 
+
     private void initateContent(){
-        View kd = findViewById(R.id.kd);
-        
+        for(int i = 0; i < statsIds.length; i++){
+            View view = findViewById(statsIds[i]);
+            TextView nameView = (TextView)view.findViewById(R.id.property_name);
+            nameView.setText(statsname[i]);
+        }
     }
 
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -91,8 +114,8 @@ public class SingleActivity extends AppCompatActivity {
                         ObjectMapper mapper = new ObjectMapper();
 
                         try {
-                            Profile playerProfile = mapper.readValue(response, Profile.class);
-
+                            profile = mapper.readValue(response, Profile.class);
+                            initiatePropertys();
                             int test = 1;
                             //display function call for displaying stats
 
@@ -118,5 +141,9 @@ public class SingleActivity extends AppCompatActivity {
 
 // Add the request to the RequestQueue.
         queue.add(stringRequest);
+    }
+
+    private void initiatePropertys(){
+        
     }
 }
