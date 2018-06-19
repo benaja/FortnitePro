@@ -40,6 +40,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.concurrent.ThreadLocalRandom;
 
 import model.Profile;
 
@@ -69,15 +70,14 @@ public class MainActivity extends AppCompatActivity {
             "Cold War"
     };
 
-    String[] pictures = {
-            "Safari",
-            "Camera",
-            "Global",
-            "FireFox",
-            "UC Browser",
-            "Android Folder",
-            "VLC Player",
-            "Cold War"
+    int[] pictures = {
+            R.drawable.character_0,
+            R.drawable.character_1,
+            R.drawable.character_2,
+            R.drawable.character_3,
+            R.drawable.character_4,
+            R.drawable.character_5,
+            R.drawable.character_6,
     };
 
 
@@ -93,7 +93,7 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(new Intent(MainActivity.this, SearchActivity.class));
             }
         });
-        //storeFavourites();
+        storeFavourites();
         loadPlayers();
 
         //getPlayer();
@@ -107,7 +107,8 @@ public class MainActivity extends AppCompatActivity {
             stringBuilder.append(",");
             stringBuilder.append(descriptions[i]);
             stringBuilder.append(",");
-            stringBuilder.append(pictures[i]);
+            int randomNum = ThreadLocalRandom.current().nextInt(0, 6);
+            stringBuilder.append(randomNum);
             stringSet.add(stringBuilder.toString());
         }
 
@@ -125,19 +126,19 @@ public class MainActivity extends AppCompatActivity {
         SharedPreferences favourites = getSharedPreferences("Favourite", 0);
         Set<String> favouritesStringSet = favourites.getStringSet("element", stringSet);
 
-        List<HashMap<String, String>> list = new ArrayList();
+        List<String> names = new ArrayList<>();
+        List<String> descriptiones = new ArrayList<>();
+        List<Integer> imageIds = new ArrayList<>();
         for(String favourite : favouritesStringSet){
             String[] favouriteArray = favourite.split(",");
-            HashMap<String, String> hashMap = new HashMap<>();
-            hashMap.put("name", favouriteArray[0]);
-            hashMap.put("description", favouriteArray[1]);
-            hashMap.put("picture", favouriteArray[2]);
-            list.add(hashMap);
-
+            names.add(favouriteArray[0]);
+            descriptiones.add(favouriteArray[1]);
+            int imagePosition = Integer.parseInt(favouriteArray[2]);
+            imageIds.add(pictures[imagePosition]);
         }
-        SimpleAdapter adapter = new SimpleAdapter(this, list, R.layout.favourite_list, new String[] { "name", "description" }, new int[] { R.id.Itemname, R.id.Itemdescription });
-
+        FavouriteListAdapter adapter = new FavouriteListAdapter(this, names, descriptiones, imageIds);
         simpleListView.setAdapter(adapter);
+
 
         //perform listView item click event
         simpleListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
