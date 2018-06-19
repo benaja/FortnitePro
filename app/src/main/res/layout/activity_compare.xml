@@ -6,4 +6,56 @@
     android:layout_height="match_parent"
     tools:context=".CompareActivity">
 
+
+    <TextView
+        android:id="@+id/title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        android:padding="5dp"
+        android:singleLine="true"
+        android:text="Overall"
+        android:textAlignment="center"
+        android:textColor="@android:color/black"
+        android:textStyle="bold" />
+
+
+    <TextView
+        android:id="@+id/playerName1"
+        android:layout_width="190dp"
+        android:layout_height="wrap_content"
+        android:gravity="start"
+        android:text="Player 1"
+        android:textAlignment="center"
+        android:textColor="@android:color/black"
+        app:layout_constraintRight_toLeftOf="@id/playerName2"
+        app:layout_constraintTop_toBottomOf="@id/title" />
+
+
+    <TextView
+        android:id="@+id/playerName2"
+        android:layout_width="192dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:gravity="end"
+        android:text="Player 2"
+        android:textAlignment="center"
+        android:textAllCaps="false"
+        android:textColor="@android:color/black"
+        app:layout_constraintLeft_toRightOf="@id/playerName1"
+        app:layout_constraintTop_toBottomOf="@id/title" />
+
+
+    <android.support.v7.widget.AppCompatSpinner
+        android:layout_width="100dp"
+        android:tooltipText="choose the season"
+        android:layout_height="wrap_content"
+        android:padding="5dp"
+        app:layout_constraintTop_toBottomOf="@id/playerName1"
+        android:spinnerMode="dropdown"
+        android:prompt="@string/app_name"
+        android:entries="@array/spinnerItems"></android.support.v7.widget.AppCompatSpinner>
+
+
+
 </android.support.constraint.ConstraintLayout>
