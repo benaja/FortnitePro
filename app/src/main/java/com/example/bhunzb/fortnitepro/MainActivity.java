@@ -159,7 +159,6 @@ public class MainActivity extends AppCompatActivity {
                 TextView textView = (TextView)view.findViewById(R.id.Itemname);
                 String text = textView.getText().toString();
                 String platform = ((TextView) view.findViewById(R.id.Itemdescription)).getText().toString();
-                Toast.makeText(getApplicationContext(), text, Toast.LENGTH_SHORT).show();
 
                 if(isComparing){
                     intent = new Intent(getApplicationContext(), CompareActivity.class);
