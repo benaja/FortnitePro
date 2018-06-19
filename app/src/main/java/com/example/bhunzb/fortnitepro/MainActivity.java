@@ -24,6 +24,7 @@ import android.view.View;
 import android.widget.ListView;
 import android.widget.SearchView;
 import android.widget.SimpleAdapter;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
@@ -63,14 +64,14 @@ public class MainActivity extends AppCompatActivity {
     };
 
     String[] descriptions = {
-            "Pro",
-            "Noob",
-            "Global",
-            "FireFox",
-            "UC Browser",
-            "Android Folder",
-            "VLC Player",
-            "Cold War"
+            "Play Station",
+            "PC",
+            "XBOX",
+            "PC",
+            "Play Station",
+            "Play Station",
+            "Play Station",
+            "PC"
     };
 
     int[] pictures = {
@@ -141,11 +142,16 @@ public class MainActivity extends AppCompatActivity {
                                     int position, long id) {
                 // TODO Auto-generated method stub
                 String Slecteditem= titles[+position];
-                Toast.makeText(getApplicationContext(), Slecteditem, Toast.LENGTH_SHORT).show();
                 
                 Intent intent = new Intent(getApplicationContext(), SingleActivity.class);
+                //TextView textView = (TextView) view.findViewById(R.id.list_view);
+                TextView textView = (TextView)view.findViewById(R.id.Itemname);
+                String text = textView.getText().toString();
+                String platfomr = ((TextView) view.findViewById(R.id.Itemdescription)).getText().toString();
+                Toast.makeText(getApplicationContext(), text, Toast.LENGTH_SHORT).show();
 
-                intent.putExtra("PlayerName", titles[+position]);
+                intent.putExtra("PlayerName", text);
+                intent.putExtra("platform", platfomr);
                 startActivity(intent);
 
             }
