@@ -20,10 +20,13 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import model.Profile;
+import model.StatProperty;
 
 public class SingleActivity extends AppCompatActivity {
 
@@ -116,7 +119,6 @@ public class SingleActivity extends AppCompatActivity {
                         try {
                             profile = mapper.readValue(response, Profile.class);
                             initiatePropertys();
-                            int test = 1;
                             //display function call for displaying stats
 
                         } catch (Exception e) {
@@ -144,6 +146,31 @@ public class SingleActivity extends AppCompatActivity {
     }
 
     private void initiatePropertys(){
-        
+        View sampleView = findViewById(R.id.wins);
+        View samplePercentBar = sampleView.findViewById(R.id.property_foreground);
+
+        int width = samplePercentBar.getLayoutParams().width;
+        int height = samplePercentBar.getLayoutParams().height;
+
+        List<StatProperty> values = new ArrayList<>();
+        values.add(profile.stats.p2.top1);
+        values.add(profile.stats.p2.winRatio);
+        values.add(profile.stats.p2.kills);
+        values.add(profile.stats.p2.kd);
+        values.add(profile.stats.p2.top10);
+        values.add(profile.stats.p2.kpg);
+
+        for(int i = 0; i < statsIds.length; i++){
+            View view = findViewById(statsIds[i]);
+            View percentilBar = view.findViewById(R.id.property_foreground);
+            TextView textView = (TextView)view.findViewById(R.id.property_value);
+
+            int currentWidth = Math.round(width / 100 * values.get(i).percentile);
+
+            percentilBar.setLayoutParams(new ConstraintLayout.LayoutParams(currentWidth, height));
+            textView.setText(values.get(i).displayValue);
+
+        }
+
     }
 }
