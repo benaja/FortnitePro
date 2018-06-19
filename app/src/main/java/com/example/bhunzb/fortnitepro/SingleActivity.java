@@ -30,6 +30,13 @@ public class SingleActivity extends AppCompatActivity {
         if (actionBar != null) {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         }
+        Intent intent = getIntent();
+        String playerName = intent.getStringExtra("player_name");
+        String platform = intent.getStringExtra("platform");
+        if(platform.equals("")){
+            platform = "pc";
+        }
+        getPlayer(playerName, platform);
     }
 
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -41,12 +48,12 @@ public class SingleActivity extends AppCompatActivity {
                 return super.onOptionsItemSelected(item);
         }
     }
-    private void getPlayer() {
+    private void getPlayer(String playerName, String platform) {
         // Instantiate the RequestQueue.
         RequestQueue queue = Volley.newRequestQueue(this);
-        Intent intent = getIntent();
-        String playerName = intent.getStringExtra("player_name");
-        final String url = "https://api.fortnitetracker.com/v1/profile/" + playerName;
+
+
+        final String url = "https://api.fortnitetracker.com/v1/profile/"+platform+ "/" + playerName;
         // Request a string response from the provided URL.
         StringRequest stringRequest = new StringRequest(Request.Method.GET, url,
                 new Response.Listener<String>() {
@@ -58,6 +65,7 @@ public class SingleActivity extends AppCompatActivity {
                         try {
                             Profile playerProfile = mapper.readValue(response, Profile.class);
 
+                            int test = 1;
                             //display function call for displaying stats
 
                         } catch (Exception e) {

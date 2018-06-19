@@ -139,15 +139,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view,
                                     int position, long id) {
-                // TODO Auto-generated method stub
-<<<<<<< HEAD
-                String Slecteditem = titles[+position];
-                Toast.makeText(getApplicationContext(), Slecteditem, Toast.LENGTH_SHORT).show();
 
-=======
-                String Slecteditem= titles[+position];
-                
->>>>>>> 5aa5977d7fda56f6512b9836d40785c0e45bb99e
                 Intent intent = new Intent(getApplicationContext(), SingleActivity.class);
                 //TextView textView = (TextView) view.findViewById(R.id.list_view);
                 TextView textView = (TextView)view.findViewById(R.id.Itemname);
@@ -155,7 +147,7 @@ public class MainActivity extends AppCompatActivity {
                 String platfomr = ((TextView) view.findViewById(R.id.Itemdescription)).getText().toString();
                 Toast.makeText(getApplicationContext(), text, Toast.LENGTH_SHORT).show();
 
-                intent.putExtra("PlayerName", text);
+                intent.putExtra("player_name", text);
                 intent.putExtra("platform", platfomr);
                 startActivity(intent);
 
@@ -186,8 +178,6 @@ public class MainActivity extends AppCompatActivity {
                 public boolean onQueryTextSubmit(String query) {
                     if (query != null) {
                         passToApirequestPlayer(query);
-                        Toast.makeText(getApplicationContext(),
-                                query, Toast.LENGTH_SHORT).show();
                     }
                     return true;
                 }
@@ -202,9 +192,9 @@ public class MainActivity extends AppCompatActivity {
     private void passToApirequestPlayer(String playerName) {
         // Instantiate the RequestQueue.
         //response = mapper.writerWithDefaultPrettyPrinter().writeValueAsString(student);
-
         Intent intent = new Intent(getBaseContext(), SingleActivity.class);
         intent.putExtra("player_name", playerName);
+        intent.putExtra("platform", "");
         startActivity(intent);
     }
 }
