@@ -50,13 +50,10 @@ import model.Profile;
 public class MainActivity extends AppCompatActivity {
     ListView simpleListView;
 
-<<<<<<< HEAD
-    String[] itemname = {
-=======
+
     String[] titles ={
->>>>>>> 8e60277d48e2574b7e6a936e6ded1c8299547b81
-            "Safari",
-            "Camera",
+            "Chillmau",
+            "21 Pörfu",
             "Global",
             "FireFox",
             "UC Browser",
@@ -66,8 +63,8 @@ public class MainActivity extends AppCompatActivity {
     };
 
     String[] descriptions = {
-            "Safari",
-            "Camera",
+            "Pro",
+            "Noob",
             "Global",
             "FireFox",
             "UC Browser",
@@ -124,21 +121,6 @@ public class MainActivity extends AppCompatActivity {
         editor.commit();
     }
 
-
-<<<<<<< HEAD
-    private void loadPlayers() {
-        simpleListView = (ListView) findViewById(R.id.list_view);
-
-
-        List<HashMap<String, String>> list = new ArrayList();
-        for (int i = 0; i < itemname.length; i++) {
-            HashMap<String, String> hashMap = new HashMap();
-            hashMap.put("name", itemname[i]);
-            hashMap.put("description", description[i]);
-            list.add(hashMap);
-        }
-        SimpleAdapter adapter = new SimpleAdapter(this, list, R.layout.favourite_list, new String[]{"name", "description"}, new int[]{R.id.Itemname, R.id.Itemdescription});
-=======
     private void loadPlayers(){
         Set<String> stringSet = new HashSet<String>();
 
@@ -156,7 +138,6 @@ public class MainActivity extends AppCompatActivity {
             imageIds.add(pictures[imagePosition]);
         }
         FavouriteListAdapter adapter = new FavouriteListAdapter(this, names, descriptiones, imageIds);
->>>>>>> 8e60277d48e2574b7e6a936e6ded1c8299547b81
 
         simpleListView = (ListView)findViewById(R.id.list_view);
         simpleListView.setAdapter(adapter);
@@ -170,7 +151,7 @@ public class MainActivity extends AppCompatActivity {
                 String Slecteditem= titles[+position];
                 Toast.makeText(getApplicationContext(), Slecteditem, Toast.LENGTH_SHORT).show();
                 
-                Intent intent = new Intent(getApplicationContext(), BadiDetailsActivity.class);
+                Intent intent = new Intent(getApplicationContext(), SingleActivity.class);
 
                 intent.putExtra("PlayerName", titles[+position]);
                 startActivity(intent);
@@ -256,63 +237,4 @@ public class MainActivity extends AppCompatActivity {
 // Add the request to the RequestQueue.
         queue.add(stringRequest);
     }
-
-    /*private void getPlayer() {
-        // Instantiate the RequestQueue.
-        RequestQueue queue = Volley.newRequestQueue(this);
-        String url = "https://api.fortnitetracker.com/v1/profile/psn/chillmau";
-
-        // Request a string response from the provided URL.
-        StringRequest stringRequest = new StringRequest(Request.Method.GET, url,
-                new Response.Listener<String>() {
-                    @Override
-                    public void onResponse(String response) {
-                        // Display the first 500 characters of the response string.
-                        ObjectMapper mapper = new ObjectMapper();
-
-                        try {
-                            Profile student = mapper.readValue(response, Profile.class);
-
-                            //response = mapper.writerWithDefaultPrettyPrinter().writeValueAsString(student);
-
-                        } catch (Exception e) {
-                            System.out.print(e);
-                        }
-
-
-                    }
-                }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                System.out.print(error);
-            }
-        }) {
-            @Override
-            public Map<String, String> getHeaders() throws AuthFailureError {
-                Map<String, String> params = new HashMap<String, String>();
-                params.put("TRN-Api-Key", "3c9aa93d-ee97-4154-bab9-281acbb3c549");
-                return params;
-            }
-        };
-
-// Add the request to the RequestQueue.
-        queue.add(stringRequest);
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.);
-        getMenuInflater().inflate(R.menu.mymenu, menu);
-        return super.onCreateOptionsMenu(menu);
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        int id = item.getItemId();
-
-        if (id == R.id.mybutton) {
-            // do something here
-        }
-        return super.onOptionsItemSelected(item);
-    }
-    */
 }
