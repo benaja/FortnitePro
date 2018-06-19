@@ -87,6 +87,9 @@ public class MainActivity extends AppCompatActivity {
             R.drawable.character_6,
     };
 
+    String player_name;
+    String platform;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -99,6 +102,8 @@ public class MainActivity extends AppCompatActivity {
 
         if(intent.hasExtra("player_name")){
             isComparing = true;
+            player_name = intent.getStringExtra("player_name");
+            platform = intent.getStringExtra("platform");
         }else{
             isComparing = false;
         }
@@ -159,7 +164,9 @@ public class MainActivity extends AppCompatActivity {
                 if(isComparing){
                     intent = new Intent(getApplicationContext(), CompareActivity.class);
                     intent.putExtra("player_name_to_compare", text);
-                    intent.putExtra("platform_from_player_2", platform);
+                    intent.putExtra("platform_to_compare", platform);
+                    intent.putExtra("player_name", player_name);
+                    intent.putExtra("platform", platform);
                 }else{
                     intent = new Intent(getApplicationContext(), SingleActivity.class);
                     intent.putExtra("player_name", text);

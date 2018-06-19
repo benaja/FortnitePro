@@ -99,7 +99,7 @@ public class SingleActivity extends AppCompatActivity {
                 return super.onOptionsItemSelected(item);
         }
     }
-    private void getPlayer(String playerName, String platform) {
+    public void getPlayer(String playerName, String platform) {
         // Instantiate the RequestQueue.
         RequestQueue queue = Volley.newRequestQueue(this);
 
