@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".CompareActivity">
+
+    <TextView
+        android:id="@+id/property_value"
+        android:layout_width="40dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="Name"
+        android:textAlignment="textEnd"
+        android:textSize="14sp"
+        app:layout_constraintStart_toEndOf="@+id/property_name"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/property_name"
+        android:layout_width="110dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="Name"
+        android:textSize="14sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <android.support.constraint.ConstraintLayout
+        android:layout_width="150dp"
+        android:layout_height="10dp"
+        android:layout_marginTop="4dp"
+        app:layout_constraintTop_toBottomOf="@+id/property_name">
+
+        <View
+            android:id="@+id/property_background"
+            android:layout_width="150dp"
+            android:layout_height="10dp"
+            android:background="@drawable/stat_background"
+            android:radius="10dp"
+            app:layout_constraintCircleRadius="@dimen/activity_horizontal_margin" />
+
+        <View
+            android:id="@+id/property_foreground"
+            android:layout_width="150dp"
+            android:layout_height="10dp"
+            android:background="@drawable/stat_foreground" />
+
+
+    </android.support.constraint.ConstraintLayout>
+
+</android.support.constraint.ConstraintLayout>
