@@ -42,6 +42,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.ThreadLocalRandom;
+
 import android.widget.AdapterView.OnItemClickListener;
 
 import model.Profile;
@@ -51,7 +52,7 @@ public class MainActivity extends AppCompatActivity {
     ListView simpleListView;
 
 
-    String[] titles ={
+    String[] titles = {
             "Chillmau",
             "21 Pörfu",
             "Global",
@@ -90,13 +91,11 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         storeFavourites();
         loadPlayers();
-
-        //getPlayer();
     }
 
-    private void storeFavourites(){
+    private void storeFavourites() {
         Set<String> stringSet = new HashSet<String>();
-        for(int i = 0; i < titles.length; i++){
+        for (int i = 0; i < titles.length; i++) {
             StringBuilder stringBuilder = new StringBuilder();
             stringBuilder.append(titles[i]);
             stringBuilder.append(",");
@@ -113,7 +112,7 @@ public class MainActivity extends AppCompatActivity {
         editor.commit();
     }
 
-    private void loadPlayers(){
+    private void loadPlayers() {
         Set<String> stringSet = new HashSet<String>();
 
         SharedPreferences favourites = getSharedPreferences("Favourite", 0);
@@ -122,7 +121,7 @@ public class MainActivity extends AppCompatActivity {
         List<String> names = new ArrayList<>();
         List<String> descriptiones = new ArrayList<>();
         List<Integer> imageIds = new ArrayList<>();
-        for(String favourite : favouritesStringSet){
+        for (String favourite : favouritesStringSet) {
             String[] favouriteArray = favourite.split(",");
             names.add(favouriteArray[0]);
             descriptiones.add(favouriteArray[1]);
@@ -131,7 +130,7 @@ public class MainActivity extends AppCompatActivity {
         }
         FavouriteListAdapter adapter = new FavouriteListAdapter(this, names, descriptiones, imageIds);
 
-        simpleListView = (ListView)findViewById(R.id.list_view);
+        simpleListView = (ListView) findViewById(R.id.list_view);
         simpleListView.setAdapter(adapter);
 
         simpleListView.setOnItemClickListener(new OnItemClickListener() {
@@ -140,9 +139,9 @@ public class MainActivity extends AppCompatActivity {
             public void onItemClick(AdapterView<?> parent, View view,
                                     int position, long id) {
                 // TODO Auto-generated method stub
-                String Slecteditem= titles[+position];
+                String Slecteditem = titles[+position];
                 Toast.makeText(getApplicationContext(), Slecteditem, Toast.LENGTH_SHORT).show();
-                
+
                 Intent intent = new Intent(getApplicationContext(), SingleActivity.class);
 
                 intent.putExtra("PlayerName", titles[+position]);
@@ -151,6 +150,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
@@ -172,61 +172,27 @@ public class MainActivity extends AppCompatActivity {
 
                 @Override
                 public boolean onQueryTextSubmit(String query) {
-                    getPlayer(query);
-                    Toast.makeText(getApplicationContext(),
-                            query, Toast.LENGTH_SHORT).show();
+                    if (query != null) {
+                        passToApirequestPlayer(query);
+                        Toast.makeText(getApplicationContext(),
+                                query, Toast.LENGTH_SHORT).show();
+                    }
                     return true;
                 }
             });
-        }
-        else {
+        } else {
             Toast.makeText(getApplicationContext(),
                     "search object null", Toast.LENGTH_SHORT).show();
         }
         return true;
     }
-    private void getPlayer(String playerName){
+
+    private void passToApirequestPlayer(String playerName) {
         // Instantiate the RequestQueue.
-        RequestQueue queue = Volley.newRequestQueue(this);
-        String url ="https://api.fortnitetracker.com/v1/profile/" + playerName;
+        //response = mapper.writerWithDefaultPrettyPrinter().writeValueAsString(student);
 
-        // Request a string response from the provided URL.
-        StringRequest stringRequest = new StringRequest(Request.Method.GET, url,
-                new Response.Listener<String>() {
-                    @Override
-                    public void onResponse(String response) {
-                        // Display the first 500 characters of the response string.
-                        ObjectMapper mapper = new ObjectMapper();
-
-                        try{
-                            Profile playerProfile = mapper.readValue(response, Profile.class);
-
-                            //response = mapper.writerWithDefaultPrettyPrinter().writeValueAsString(student);
-                            Intent intent = new Intent(getBaseContext(), SingleActivity.class);
-                            //intent.putExtra("player_data", playerProfile);
-                            startActivity(intent);
-
-                        }catch (Exception e){
-                            System.out.print(e);
-                        }
-
-
-                    }
-                }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                System.out.print(error);
-            }
-        }){
-            @Override
-            public Map<String, String> getHeaders() throws AuthFailureError {
-                Map<String, String> params = new HashMap<String, String>();
-                params.put("TRN-Api-Key", "3c9aa93d-ee97-4154-bab9-281acbb3c549");
-                return params;
-            }
-        };
-
-// Add the request to the RequestQueue.
-        queue.add(stringRequest);
+        Intent intent = new Intent(getBaseContext(), SingleActivity.class);
+        intent.putExtra("player_name", playerName);
+        startActivity(intent);
     }
 }
