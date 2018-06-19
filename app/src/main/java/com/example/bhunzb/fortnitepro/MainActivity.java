@@ -54,6 +54,7 @@ public class MainActivity extends AppCompatActivity {
     Boolean isComparing = false;
 
 
+
     String[] titles = {
             "Chillmau",
             "21 Pörfu",
@@ -149,20 +150,23 @@ public class MainActivity extends AppCompatActivity {
             public void onItemClick(AdapterView<?> parent, View view,
                                     int position, long id) {
 
-                Intent intent;
-                if(isComparing){
-                    intent = new Intent(getApplicationContext(), CompareActivity.class);
-                }else{
-                    intent = new Intent(getApplicationContext(), SingleActivity.class);
-                }
-                //TextView textView = (TextView) view.findViewById(R.id.list_view);
+                Intent intent;  //TextView textView = (TextView) view.findViewById(R.id.list_view);
                 TextView textView = (TextView)view.findViewById(R.id.Itemname);
                 String text = textView.getText().toString();
-                String platfomr = ((TextView) view.findViewById(R.id.Itemdescription)).getText().toString();
+                String platform = ((TextView) view.findViewById(R.id.Itemdescription)).getText().toString();
                 Toast.makeText(getApplicationContext(), text, Toast.LENGTH_SHORT).show();
 
-                intent.putExtra("player_name", text);
-                intent.putExtra("platform", platfomr);
+                if(isComparing){
+                    intent = new Intent(getApplicationContext(), CompareActivity.class);
+                    intent.putExtra("player_name_to_compare", text);
+                    intent.putExtra("platform_from_player_2", platform);
+                }else{
+                    intent = new Intent(getApplicationContext(), SingleActivity.class);
+                    intent.putExtra("player_name", text);
+                    intent.putExtra("platform", platform);
+                }
+                //TextView textView = (TextView) view.findViewById(R.id.list_view);
+
                 startActivity(intent);
 
             }
