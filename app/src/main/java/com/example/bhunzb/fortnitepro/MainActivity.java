@@ -149,6 +149,11 @@ public class MainActivity extends AppCompatActivity {
                 // TODO Auto-generated method stub
                 String Slecteditem= titles[+position];
                 Toast.makeText(getApplicationContext(), Slecteditem, Toast.LENGTH_SHORT).show();
+                
+                Intent intent = new Intent(getApplicationContext(), BadiDetailsActivity.class);
+
+                intent.putExtra("PlayerName", titles[+position]);
+                startActivity(intent);
 
             }
         });
