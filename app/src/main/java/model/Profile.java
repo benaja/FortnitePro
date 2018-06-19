@@ -5,13 +5,13 @@ import java.util.List;
 public class Profile {
     public String accountId;
 
-    public   int platformId;
+    public int platformId;
 
-    public   String platformName;
+    public String platformName;
 
-    public   String platformNameLong;
+    public String platformNameLong;
 
-    public   String epicUserHandle;
+    public String epicUserHandle;
 
     public Stats stats;
 

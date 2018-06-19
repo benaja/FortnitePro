@@ -2,6 +2,7 @@ package com.example.bhunzb.fortnitepro;
 
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.support.v4.content.ContextCompat;
@@ -36,8 +37,12 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
+import java.util.concurrent.ThreadLocalRandom;
+import android.widget.AdapterView.OnItemClickListener;
 
 import model.Profile;
 
@@ -45,7 +50,11 @@ import model.Profile;
 public class MainActivity extends AppCompatActivity {
     ListView simpleListView;
 
+<<<<<<< HEAD
     String[] itemname = {
+=======
+    String[] titles ={
+>>>>>>> 8e60277d48e2574b7e6a936e6ded1c8299547b81
             "Safari",
             "Camera",
             "Global",
@@ -56,7 +65,7 @@ public class MainActivity extends AppCompatActivity {
             "Cold War"
     };
 
-    String[] description = {
+    String[] descriptions = {
             "Safari",
             "Camera",
             "Global",
@@ -65,6 +74,16 @@ public class MainActivity extends AppCompatActivity {
             "Android Folder",
             "VLC Player",
             "Cold War"
+    };
+
+    int[] pictures = {
+            R.drawable.character_0,
+            R.drawable.character_1,
+            R.drawable.character_2,
+            R.drawable.character_3,
+            R.drawable.character_4,
+            R.drawable.character_5,
+            R.drawable.character_6,
     };
 
 
@@ -80,15 +99,33 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(new Intent(MainActivity.this, SearchActivity.class));
             }
         });
-
+        storeFavourites();
         loadPlayers();
 
         //getPlayer();
+    }
 
+    private void storeFavourites(){
+        Set<String> stringSet = new HashSet<String>();
+        for(int i = 0; i < titles.length; i++){
+            StringBuilder stringBuilder = new StringBuilder();
+            stringBuilder.append(titles[i]);
+            stringBuilder.append(",");
+            stringBuilder.append(descriptions[i]);
+            stringBuilder.append(",");
+            int randomNum = ThreadLocalRandom.current().nextInt(0, 6);
+            stringBuilder.append(randomNum);
+            stringSet.add(stringBuilder.toString());
+        }
 
+        SharedPreferences favourites = getSharedPreferences("Favourite", 0);
+        SharedPreferences.Editor editor = favourites.edit();
+        editor.putStringSet("element", stringSet);
+        editor.commit();
     }
 
 
+<<<<<<< HEAD
     private void loadPlayers() {
         simpleListView = (ListView) findViewById(R.id.list_view);
 
@@ -101,13 +138,37 @@ public class MainActivity extends AppCompatActivity {
             list.add(hashMap);
         }
         SimpleAdapter adapter = new SimpleAdapter(this, list, R.layout.favourite_list, new String[]{"name", "description"}, new int[]{R.id.Itemname, R.id.Itemdescription});
+=======
+    private void loadPlayers(){
+        Set<String> stringSet = new HashSet<String>();
 
+        SharedPreferences favourites = getSharedPreferences("Favourite", 0);
+        Set<String> favouritesStringSet = favourites.getStringSet("element", stringSet);
+
+        List<String> names = new ArrayList<>();
+        List<String> descriptiones = new ArrayList<>();
+        List<Integer> imageIds = new ArrayList<>();
+        for(String favourite : favouritesStringSet){
+            String[] favouriteArray = favourite.split(",");
+            names.add(favouriteArray[0]);
+            descriptiones.add(favouriteArray[1]);
+            int imagePosition = Integer.parseInt(favouriteArray[2]);
+            imageIds.add(pictures[imagePosition]);
+        }
+        FavouriteListAdapter adapter = new FavouriteListAdapter(this, names, descriptiones, imageIds);
+>>>>>>> 8e60277d48e2574b7e6a936e6ded1c8299547b81
+
+        simpleListView = (ListView)findViewById(R.id.list_view);
         simpleListView.setAdapter(adapter);
 
-        //perform listView item click event
-        simpleListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        simpleListView.setOnItemClickListener(new OnItemClickListener() {
+
             @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+            public void onItemClick(AdapterView<?> parent, View view,
+                                    int position, long id) {
+                // TODO Auto-generated method stub
+                String Slecteditem= titles[+position];
+                Toast.makeText(getApplicationContext(), Slecteditem, Toast.LENGTH_SHORT).show();
 
             }
         });
