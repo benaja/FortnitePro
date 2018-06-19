@@ -2,6 +2,7 @@ package com.example.bhunzb.fortnitepro;
 
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.support.v4.content.ContextCompat;
@@ -35,8 +36,10 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import model.Profile;
 
@@ -44,7 +47,7 @@ import model.Profile;
 public class MainActivity extends AppCompatActivity {
     ListView simpleListView;
 
-    String[] itemname ={
+    String[] titles ={
             "Safari",
             "Camera",
             "Global",
@@ -55,7 +58,18 @@ public class MainActivity extends AppCompatActivity {
             "Cold War"
     };
 
-    String[] description = {
+    String[] descriptions = {
+            "Safari",
+            "Camera",
+            "Global",
+            "FireFox",
+            "UC Browser",
+            "Android Folder",
+            "VLC Player",
+            "Cold War"
+    };
+
+    String[] pictures = {
             "Safari",
             "Camera",
             "Global",
@@ -79,25 +93,47 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(new Intent(MainActivity.this, SearchActivity.class));
             }
         });
-
+        //storeFavourites();
         loadPlayers();
 
         //getPlayer();
+    }
 
+    private void storeFavourites(){
+        Set<String> stringSet = new HashSet<String>();
+        for(int i = 0; i < titles.length; i++){
+            StringBuilder stringBuilder = new StringBuilder();
+            stringBuilder.append(titles[i]);
+            stringBuilder.append(",");
+            stringBuilder.append(descriptions[i]);
+            stringBuilder.append(",");
+            stringBuilder.append(pictures[i]);
+            stringSet.add(stringBuilder.toString());
+        }
 
+        SharedPreferences favourites = getSharedPreferences("Favourite", 0);
+        SharedPreferences.Editor editor = favourites.edit();
+        editor.putStringSet("element", stringSet);
+        editor.commit();
     }
 
 
     private void loadPlayers(){
-        simpleListView = (ListView)findViewById(R.id.list_view);
+        Set<String> stringSet = new HashSet<String>();
 
+        simpleListView = (ListView)findViewById(R.id.list_view);
+        SharedPreferences favourites = getSharedPreferences("Favourite", 0);
+        Set<String> favouritesStringSet = favourites.getStringSet("element", stringSet);
 
         List<HashMap<String, String>> list = new ArrayList();
-        for(int i = 0; i < itemname.length; i++) {
-            HashMap<String,String> hashMap =  new HashMap();
-            hashMap.put("name", itemname[i]);
-            hashMap.put("description", description[i]);
+        for(String favourite : favouritesStringSet){
+            String[] favouriteArray = favourite.split(",");
+            HashMap<String, String> hashMap = new HashMap<>();
+            hashMap.put("name", favouriteArray[0]);
+            hashMap.put("description", favouriteArray[1]);
+            hashMap.put("picture", favouriteArray[2]);
             list.add(hashMap);
+
         }
         SimpleAdapter adapter = new SimpleAdapter(this, list, R.layout.favourite_list, new String[] { "name", "description" }, new int[] { R.id.Itemname, R.id.Itemdescription });
 
