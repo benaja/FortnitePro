@@ -51,6 +51,7 @@ import model.Profile;
 
 public class MainActivity extends AppCompatActivity {
     ListView simpleListView;
+    Boolean isComparing = false;
 
 
     String[] titles = {
@@ -92,6 +93,14 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         storeFavourites();
         loadPlayers();
+
+        Intent intent = getIntent();
+
+        if(intent.hasExtra("player_name")){
+            isComparing = true;
+        }else{
+            isComparing = false;
+        }
     }
 
     private void storeFavourites() {
@@ -140,7 +149,12 @@ public class MainActivity extends AppCompatActivity {
             public void onItemClick(AdapterView<?> parent, View view,
                                     int position, long id) {
 
-                Intent intent = new Intent(getApplicationContext(), SingleActivity.class);
+                Intent intent;
+                if(isComparing){
+                    intent = new Intent(getApplicationContext(), CompareActivity.class);
+                }else{
+                    intent = new Intent(getApplicationContext(), SingleActivity.class);
+                }
                 //TextView textView = (TextView) view.findViewById(R.id.list_view);
                 TextView textView = (TextView)view.findViewById(R.id.Itemname);
                 String text = textView.getText().toString();
@@ -190,9 +204,14 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void passToApirequestPlayer(String playerName) {
+        Intent intent;
+        if(isComparing){
+            intent = new Intent(getApplicationContext(), CompareActivity.class);
+        }else{
+            intent = new Intent(getApplicationContext(), SingleActivity.class);
+        }
         // Instantiate the RequestQueue.
         //response = mapper.writerWithDefaultPrettyPrinter().writeValueAsString(student);
-        Intent intent = new Intent(getBaseContext(), SingleActivity.class);
         intent.putExtra("player_name", playerName);
         intent.putExtra("platform", "");
         startActivity(intent);

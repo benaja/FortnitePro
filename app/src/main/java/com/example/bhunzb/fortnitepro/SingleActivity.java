@@ -5,6 +5,9 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
+import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
@@ -22,6 +25,9 @@ import model.Profile;
 
 public class SingleActivity extends AppCompatActivity {
 
+    private String playerName;
+    private String platform;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -31,12 +37,24 @@ public class SingleActivity extends AppCompatActivity {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         }
         Intent intent = getIntent();
-        String playerName = intent.getStringExtra("player_name");
-        String platform = intent.getStringExtra("platform");
+        playerName = intent.getStringExtra("player_name");
+        platform = intent.getStringExtra("platform");
         if(platform.equals("")){
             platform = "pc";
         }
         getPlayer(playerName, platform);
+
+        Button button = (Button) findViewById(R.id.compare_button);
+        button.setOnClickListener(new View.OnClickListener() {
+
+            public void onClick(View v) {
+                // TODO Auto-generated method stub
+                Intent intent = new Intent(getBaseContext(), MainActivity.class);
+                intent.putExtra("player_name", playerName);
+                intent.putExtra("platform", platform);
+                startActivity(intent);
+            }
+        });
     }
 
     public boolean onOptionsItemSelected(MenuItem item) {

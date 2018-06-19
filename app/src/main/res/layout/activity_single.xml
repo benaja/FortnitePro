@@ -6,4 +6,15 @@
     android:layout_height="match_parent"
     tools:context=".SingleActivity">
 
+
+    <Button
+        android:id="@+id/compare_button"
+        android:layout_width="wrap_content"
+        android:layout_height="64dp"
+        android:layout_marginBottom="15dp"
+        android:layout_marginEnd="15dp"
+        android:text="Compare"
+        android:textSize="10sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
 </android.support.constraint.ConstraintLayout>
