@@ -44,7 +44,7 @@ public class SearchActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search);
-        handleIntent(getIntent());
+       // handleIntent(getIntent());
         Toast.makeText(getApplicationContext(),
                 "search Activity launched", Toast.LENGTH_LONG).show();
     }
