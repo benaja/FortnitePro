@@ -1,11 +1,13 @@
 package com.example.bhunzb.fortnitepro;
 
 import android.content.Intent;
+import android.support.constraint.ConstraintLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.Toast;
 
@@ -39,6 +41,7 @@ public class SingleActivity extends AppCompatActivity {
         Intent intent = getIntent();
         playerName = intent.getStringExtra("player_name");
         platform = intent.getStringExtra("platform");
+        actionBar.setTitle(playerName);
         if(platform.equals("")){
             platform = "pc";
         }
@@ -55,6 +58,13 @@ public class SingleActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
+        initateContent();
+    }
+
+    private void initateContent(){
+        View kd = findViewById(R.id.kd);
+        
     }
 
     public boolean onOptionsItemSelected(MenuItem item) {
