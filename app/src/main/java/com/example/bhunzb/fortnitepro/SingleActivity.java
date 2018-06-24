@@ -100,7 +100,7 @@ public class SingleActivity extends AppCompatActivity {
                 // TODO Auto-generated method stub
                 Intent intent = new Intent(getBaseContext(), MainActivity.class);
                 intent.putExtra("player_name", playerName);
-                intent.putExtra("platform", platform);
+                intent.putExtra("platform", profile.platformNameLong);
                 startActivity(intent);
             }
         });

@@ -100,6 +100,11 @@ public class MainActivity extends AppCompatActivity {
             isComparing = true;
             player_name = intent.getStringExtra("player_name");
             platform = intent.getStringExtra("platform");
+
+            ActionBar actionBar = getSupportActionBar();
+            if (actionBar != null) {
+                actionBar.setTitle("Spieler auswählen");
+            }
         }else{
             isComparing = false;
         }
@@ -162,18 +167,18 @@ public class MainActivity extends AppCompatActivity {
                 Intent intent;  //TextView textView = (TextView) view.findViewById(R.id.list_view);
                 TextView textView = (TextView)view.findViewById(R.id.Itemname);
                 String text = textView.getText().toString();
-                String platform = ((TextView) view.findViewById(R.id.Itemdescription)).getText().toString();
+                String newPlatform = ((TextView) view.findViewById(R.id.Itemdescription)).getText().toString();
 
                 if(isComparing){
                     intent = new Intent(getApplicationContext(), CompareActivity.class);
                     intent.putExtra("player_name_to_compare", text);
-                    intent.putExtra("platform_to_compare", platform);
+                    intent.putExtra("platform_to_compare", newPlatform);
                     intent.putExtra("player_name", player_name);
                     intent.putExtra("platform", platform);
                 }else{
                     intent = new Intent(getApplicationContext(), SingleActivity.class);
                     intent.putExtra("player_name", text);
-                    intent.putExtra("platform", platform);
+                    intent.putExtra("platform", newPlatform);
                 }
                 //TextView textView = (TextView) view.findViewById(R.id.list_view);
 
@@ -217,17 +222,21 @@ public class MainActivity extends AppCompatActivity {
         return true;
     }
 
-    private void passToApirequestPlayer(String playerName) {
-        Intent intent;
+    private void passToApirequestPlayer(String searchPlayer) {
+        Intent intent;  //TextView textView = (TextView) view.findViewById(R.id.list_view);
         if(isComparing){
             intent = new Intent(getApplicationContext(), CompareActivity.class);
+            intent.putExtra("player_name_to_compare", searchPlayer);
+            intent.putExtra("platform_to_compare", "");
+            intent.putExtra("player_name", player_name);
+            intent.putExtra("platform", platform);
         }else{
             intent = new Intent(getApplicationContext(), SingleActivity.class);
+            intent.putExtra("player_name", searchPlayer);
+            intent.putExtra("platform", "");
         }
-        // Instantiate the RequestQueue.
-        //response = mapper.writerWithDefaultPrettyPrinter().writeValueAsString(student);
-        intent.putExtra("player_name", playerName);
-        intent.putExtra("platform", "");
+        //TextView textView = (TextView) view.findViewById(R.id.list_view);
+
         startActivity(intent);
     }
 }

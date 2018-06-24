@@ -2,6 +2,7 @@ package com.example.bhunzb.fortnitepro;
 
 import android.content.Intent;
 import android.support.constraint.ConstraintLayout;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -83,6 +84,11 @@ public class CompareActivity extends AppCompatActivity {
         convertPlatforms();
         updateRadioButtons();
 
+        ActionBar actionBar = getSupportActionBar();
+        if (actionBar != null) {
+            actionBar.setTitle("Spieler vergleichen");
+        }
+
         Spinner dropdown = findViewById(R.id.select_game_type);
         //create a list of items for the spinner.
 
@@ -144,6 +150,12 @@ public class CompareActivity extends AppCompatActivity {
         getPlayer(playerName, platform);
     }
 
+    @Override
+    public void onBackPressed() {
+        Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+        startActivity(intent);
+    }
+
     private void convertPlatforms(){
         if(platform.equals("") || platform.equals("PC")){
             platform = "pc";
@@ -175,11 +187,12 @@ public class CompareActivity extends AppCompatActivity {
     }
 
     public void getPlayer(String playerName, String platform) {
-        // Instantiate the RequestQueue.
+        findViewById(R.id.compare_content).setVisibility(View.GONE);
+        findViewById(R.id.progressBar).setVisibility(View.VISIBLE);
+
         RequestQueue queue = Volley.newRequestQueue(this);
 
         final String url = "https://api.fortnitetracker.com/v1/profile/"+platform+ "/" + playerName;
-        // Request a string response from the provided URL.
         StringRequest stringRequest = new StringRequest(Request.Method.GET, url,
                 new Response.Listener<String>() {
                     @Override
@@ -204,6 +217,8 @@ public class CompareActivity extends AppCompatActivity {
 
     private void parseProfile(String response){
         ObjectMapper mapper = new ObjectMapper();
+        findViewById(R.id.compare_content).setVisibility(View.VISIBLE);
+        findViewById(R.id.progressBar).setVisibility(View.GONE);
         try {
             if(profile == null && profile2 == null){
                 profile = mapper.readValue(response, Profile.class);
