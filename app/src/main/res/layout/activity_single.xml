@@ -23,6 +23,7 @@
             android:layout_marginStart="16dp"
             android:layout_marginTop="24dp"
             android:text="Spielername nicht gefunden, ändern sie die Platform oder geben sie einen anderen Namen ein!"
+            android:visibility="gone"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/radioGroup" />
@@ -67,7 +68,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginTop="70dp"
-            android:visibility="gone"
+            android:visibility="visible"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
 

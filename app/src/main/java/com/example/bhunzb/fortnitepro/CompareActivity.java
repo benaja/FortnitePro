@@ -5,7 +5,11 @@ import android.support.constraint.ConstraintLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.EditText;
+import android.widget.RadioGroup;
+import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.android.volley.AuthFailureError;
@@ -61,6 +65,9 @@ public class CompareActivity extends AppCompatActivity {
     private String playerName2;
     private String platform;
     private String platform2;
+    private int checkIfGameModeHasChange = 0;
+    private int checkIfRadioButtonhasChanged = 0;
+    private int checkIfRadioButtonhasChanged2 = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -74,6 +81,65 @@ public class CompareActivity extends AppCompatActivity {
         platform2 = intent.getStringExtra("platform_to_compare");
 
         convertPlatforms();
+        updateRadioButtons();
+
+        Spinner dropdown = findViewById(R.id.select_game_type);
+        //create a list of items for the spinner.
+
+        dropdown.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view,
+                                       int position, long id) {
+                if(++checkIfGameModeHasChange > 1){
+                    updatePropertys(position);
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+                // TODO Auto-generated method stub
+            }
+        });
+
+        RadioGroup radioGroup = findViewById(R.id.platform_radio_buttons);
+        radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup group, int checkedId) {
+                if(++checkIfRadioButtonhasChanged > 0){
+                    profile = null;
+                    if(checkedId == R.id.radio_button_pc){
+                        platform = "pc";
+                        getPlayer(playerName, platform);
+                    }else if(checkedId == R.id.radio_button_ps){
+                        platform = "psn";
+                        getPlayer(playerName, platform);
+                    }else if(checkedId == R.id.radio_button_xbox){
+                        platform = "xbl";
+                        getPlayer(playerName, platform);
+                    }
+                }
+            }
+        });
+
+        RadioGroup radioGroup2 = findViewById(R.id.platfomr_radio_buttons_2);
+        radioGroup2.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup group, int checkedId) {
+                if(++checkIfRadioButtonhasChanged2 > 0){
+                    profile2 = null;
+                    if(checkedId == R.id.radio_button_pc){
+                        platform2 = "pc";
+                        getPlayer(playerName2, platform2);
+                    }else if(checkedId == R.id.radio_button_ps){
+                        platform2 = "psn";
+                        getPlayer(playerName2, platform2);
+                    }else if(checkedId == R.id.radio_button_xbox){
+                        platform2 = "xbl";
+                        getPlayer(playerName2, platform2);
+                    }
+                }
+            }
+        });
 
         getPlayer(playerName, platform);
     }
@@ -139,15 +205,33 @@ public class CompareActivity extends AppCompatActivity {
     private void parseProfile(String response){
         ObjectMapper mapper = new ObjectMapper();
         try {
-            if(profile == null){
+            if(profile == null && profile2 == null){
                 profile = mapper.readValue(response, Profile.class);
                 getPlayer(playerName2, platform2);
-            }else{
+            }else if(profile != null && profile2 == null){
                 profile2 = mapper.readValue(response, Profile.class);
                 initiatePropertys();
+            }else{
+                profile = mapper.readValue(response, Profile.class);
+                initiatePropertys();
             }
+            findViewById(R.id.stats_player_1).setVisibility(View.VISIBLE);
+            findViewById(R.id.stats_player_2).setVisibility(View.VISIBLE);
+            findViewById(R.id.error_player_1).setVisibility(View.GONE);
+            findViewById(R.id.error_player_2).setVisibility(View.GONE);
         } catch (Exception e) {
-            System.out.print(e);
+            if(profile == null && profile2 == null){
+                findViewById(R.id.stats_player_1).setVisibility(View.GONE);
+                findViewById(R.id.stats_player_2).setVisibility(View.GONE);
+                findViewById(R.id.error_player_1).setVisibility(View.VISIBLE);
+                findViewById(R.id.error_player_2).setVisibility(View.VISIBLE);
+            }else if(profile != null && profile2 == null){
+                findViewById(R.id.stats_player_2).setVisibility(View.GONE);
+                findViewById(R.id.error_player_2).setVisibility(View.VISIBLE);
+            }else{
+                findViewById(R.id.stats_player_1).setVisibility(View.GONE);
+                findViewById(R.id.error_player_1).setVisibility(View.VISIBLE);
+            }
         }
     }
 
@@ -156,7 +240,9 @@ public class CompareActivity extends AppCompatActivity {
         TextView titleName2 = findViewById(R.id.playerName2);
         titleName.setText(profile.epicUserHandle);
         titleName2.setText(profile2.epicUserHandle);
-        updatePropertys(0);
+        Spinner dropdown = findViewById(R.id.select_game_type);
+        int selectedRadioButtonId = dropdown.getSelectedItemPosition();
+        updatePropertys(selectedRadioButtonId);
     }
 
     private void updatePropertys(int gameType){
@@ -244,4 +330,24 @@ public class CompareActivity extends AppCompatActivity {
         values.add(profile.stats.p9.kpg);
         return values;
     }
+    private void updateRadioButtons(){
+        RadioGroup radioGroup = (RadioGroup)findViewById(R.id.platform_radio_buttons);
+        if(platform.equals("pc")){
+            radioGroup.check(R.id.radio_button_pc);
+        }else if(platform.equals("psn")){
+            radioGroup.check(R.id.radio_button_ps);
+        }else if(platform.equals("xbl")){
+            radioGroup.check(R.id.radio_button_xbox);
+        }
+
+        radioGroup = (RadioGroup)findViewById(R.id.platfomr_radio_buttons_2);
+        if(platform2.equals("pc")){
+            radioGroup.check(R.id.radio_button_pc);
+        }else if(platform2.equals("psn")){
+            radioGroup.check(R.id.radio_button_ps);
+        }else if(platform2.equals("xbl")){
+            radioGroup.check(R.id.radio_button_xbox);
+        }
+    }
+
 }
