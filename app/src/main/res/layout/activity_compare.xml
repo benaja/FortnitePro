@@ -7,186 +7,261 @@
     tools:context=".CompareActivity">
 
 
-    <TextView
-        android:id="@+id/title"
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center_horizontal"
-        android:padding="5dp"
-        android:singleLine="true"
-        android:text="Overall"
-        android:textAlignment="center"
-        android:textColor="@android:color/black"
-        android:textStyle="bold" />
+        android:layout_height="match_parent"
+        tools:layout_editor_absoluteX="0dp"
+        tools:layout_editor_absoluteY="0dp">
 
+        <android.support.constraint.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
 
-    <TextView
-        android:id="@+id/playerName1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="64dp"
-        android:gravity="start"
-        android:padding="5dp"
-        android:text="Player 1"
-        android:textAlignment="center"
-        android:textColor="@android:color/black"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/title" />
+            <include
+                android:id="@+id/percent_TOP10_2"
+                layout="@layout/property"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="16dp"
+                android:layout_marginTop="16dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/percent_WinPerc2"></include>
 
+            <include
+                android:id="@+id/percent_Kills"
+                layout="@layout/property"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="16dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/percent_TOP10"></include>
 
-    <TextView
-        android:id="@+id/playerName2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_marginEnd="64dp"
-        android:gravity="end"
-        android:padding="5dp"
-        android:text="Player 2"
-        android:textAlignment="center"
-        android:textAllCaps="false"
-        android:textColor="@android:color/black"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/title" />
+            <include
+                android:id="@+id/percent_KPM2"
+                layout="@layout/property"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="16dp"
+                android:layout_marginTop="16dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/percent_KD"></include>
 
-    <RelativeLayout
-        android:id="@+id/spinner"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        app:layout_constraintTop_toBottomOf="@+id/playerName1"
-        tools:layout_editor_absoluteX="0dp">
+            <include
+                android:id="@+id/percent_KPM"
+                layout="@layout/property"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="16dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/percent_KD"></include>
 
-        <android.support.v7.widget.AppCompatSpinner
-            android:layout_width="100dp"
-            android:layout_height="wrap_content"
-            android:entries="@array/spinnerItems"
-            android:padding="5dp"
-            android:prompt="@string/app_name"
-            android:spinnerMode="dropdown"
-            android:tooltipText="choose the season"></android.support.v7.widget.AppCompatSpinner>
-    </RelativeLayout>
+            <RadioGroup
+                android:id="@+id/platfomr_radio_buttons_2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="16dp"
+                android:layout_marginTop="16dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/playerName2">
 
-    <include
-        android:id="@+id/percent_Wins2"
-        layout="@layout/property"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="16dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/spinner" />
+                <RadioButton
+                    android:id="@+id/radio_button_pc"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="start"
+                    android:layout_weight="1"
+                    android:layoutDirection="rtl"
+                    android:text="PC" />
 
-    <include
-        android:id="@+id/percent_Wins"
-        layout="@layout/property"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        app:layout_constraintLeft_toRightOf="@id/percent_Kills"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/spinner" />
+                <RadioButton
+                    android:id="@+id/radio_button_ps"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="start"
+                    android:layout_weight="1"
+                    android:layoutDirection="rtl"
+                    android:text="Play Station"
+                    android:textAlignment="textStart" />
 
-    <include
-        android:id="@+id/percent_Kills2"
-        layout="@layout/property"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="16dp"
-        android:layout_marginTop="16dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/percent_TOP10_2"></include>
+                <RadioButton
+                    android:id="@+id/radio_button_xbox"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="start"
+                    android:layout_weight="1"
+                    android:layoutDirection="rtl"
+                    android:text="XBOX"
+                    android:textAlignment="textStart" />
+            </RadioGroup>
 
-    <include
-        android:id="@+id/percent_Kills"
-        layout="@layout/property"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/percent_TOP10"></include>
+            <RelativeLayout
+                android:id="@+id/spinner"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/platform_radio_buttons">
 
-    <include
-        android:id="@+id/percent_TOP10_2"
-        layout="@layout/property"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="16dp"
-        android:layout_marginTop="16dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/percent_WinPerc2"></include>
+                <android.support.v7.widget.AppCompatSpinner
+                    android:layout_width="100dp"
+                    android:layout_height="wrap_content"
+                    android:entries="@array/spinnerItems"
+                    android:padding="5dp"
+                    android:prompt="@string/app_name"
+                    android:spinnerMode="dropdown"
+                    android:tooltipText="choose the season"></android.support.v7.widget.AppCompatSpinner>
+            </RelativeLayout>
 
-    <include
-        android:id="@+id/percent_TOP10"
-        layout="@layout/property"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
-        app:layout_constraintLeft_toRightOf="@id/percent_KPM"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/percent_WinPerc"></include>
+            <TextView
+                android:id="@+id/playerName2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:layout_marginEnd="64dp"
+                android:layout_marginTop="8dp"
+                android:gravity="end"
+                android:padding="5dp"
+                android:text="Player 2"
+                android:textAlignment="center"
+                android:textAllCaps="false"
+                android:textColor="@android:color/black"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
-    <include
-        android:id="@+id/percent_KPM2"
-        layout="@layout/property"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="16dp"
-        android:layout_marginTop="16dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/percent_KD"></include>
+            <include
+                android:id="@+id/percent_TOP10"
+                layout="@layout/property"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="16dp"
+                app:layout_constraintLeft_toRightOf="@id/percent_KPM"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/percent_WinPerc"></include>
 
-    <include
-        android:id="@+id/percent_KPM"
-        layout="@layout/property"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/percent_KD"></include>
+            <TextView
+                android:id="@+id/playerName1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="64dp"
+                android:layout_marginTop="8dp"
+                android:gravity="start"
+                android:padding="5dp"
+                android:text="Player 1"
+                android:textAlignment="center"
+                android:textColor="@android:color/black"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
-    <include
-        android:id="@+id/percent_WinPerc2"
-        layout="@layout/property"
-        android:layout_width="wrap_content"
-        android:layout_height="54dp"
-        android:layout_marginEnd="16dp"
-        android:layout_marginTop="16dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/percent_Wins2"></include>
+            <include
+                android:id="@+id/percent_Wins2"
+                layout="@layout/property"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="16dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/spinner" />
 
-    <include
-        android:id="@+id/percent_WinPerc"
-        layout="@layout/property"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
-        app:layout_constraintLeft_toRightOf="@id/percent_KD"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/percent_Wins"></include>
+            <include
+                android:id="@+id/percent_Wins"
+                layout="@layout/property"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                app:layout_constraintLeft_toRightOf="@id/percent_Kills"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/spinner" />
 
-    <include
-        android:id="@+id/percent_KD2"
-        layout="@layout/property"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="16dp"
-        android:layout_marginTop="16dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/percent_Kills"></include>
+            <include
+                android:id="@+id/percent_WinPerc2"
+                layout="@layout/property"
+                android:layout_width="wrap_content"
+                android:layout_height="54dp"
+                android:layout_marginEnd="16dp"
+                android:layout_marginTop="16dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/percent_Wins2"></include>
 
-    <include
-        android:id="@+id/percent_KD"
-        layout="@layout/property"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/percent_Kills"></include>
+            <include
+                android:id="@+id/percent_WinPerc"
+                layout="@layout/property"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="16dp"
+                app:layout_constraintLeft_toRightOf="@id/percent_KD"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/percent_Wins"></include>
+
+            <include
+                android:id="@+id/percent_KD2"
+                layout="@layout/property"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="16dp"
+                android:layout_marginTop="16dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/percent_Kills"></include>
+
+            <include
+                android:id="@+id/percent_KD"
+                layout="@layout/property"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="16dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/percent_Kills"></include>
+
+            <RadioGroup
+                android:id="@+id/platform_radio_buttons"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="16dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/playerName1">
+
+                <RadioButton
+                    android:id="@+id/radio_button_pc"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="PC" />
+
+                <RadioButton
+                    android:id="@+id/radio_button_ps"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Play Station" />
+
+                <RadioButton
+                    android:id="@+id/radio_button_xbox"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="XBOX" />
+
+            </RadioGroup>
+
+            <include
+                android:id="@+id/percent_Kills2"
+                layout="@layout/property"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="16dp"
+                android:layout_marginTop="16dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/percent_TOP10_2"></include>
+        </android.support.constraint.ConstraintLayout>
+    </ScrollView>
 
 
 </android.support.constraint.ConstraintLayout>

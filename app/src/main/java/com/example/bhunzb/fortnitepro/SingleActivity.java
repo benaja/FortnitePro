@@ -248,33 +248,21 @@ public class SingleActivity extends AppCompatActivity {
                         try {
                             profile = mapper.readValue(response, Profile.class);
                             updatePropertys(0);
-                            ProgressBar progressBar = (ProgressBar)findViewById(R.id.progressBar);
-                            progressBar.setVisibility(View.GONE);
-
-                            View content = findViewById(R.id.single_view_content);
-                            content.setVisibility(View.VISIBLE);
-
-                            View singleViewProperties = findViewById(R.id.single_view_properties);
-                            singleViewProperties.setVisibility(View.VISIBLE);
-
-                            View error = findViewById(R.id.error_text);
-                            error.setVisibility(View.GONE);
+                            findViewById(R.id.progressBar).setVisibility(View.GONE);
+                            findViewById(R.id.single_view_content).setVisibility(View.VISIBLE);
+                            findViewById(R.id.single_view_properties).setVisibility(View.VISIBLE);
+                            findViewById(R.id.error_text).setVisibility(View.GONE);
+                            findViewById(R.id.favourite).setVisibility(View.VISIBLE);
 
                             checkIfFavourite();
                             //display function call for displaying stats
 
                         } catch (Exception e) {
-                            ProgressBar progressBar = (ProgressBar)findViewById(R.id.progressBar);
-                            progressBar.setVisibility(View.GONE);
-
-                            View content = findViewById(R.id.single_view_content);
-                            content.setVisibility(View.VISIBLE);
-
-                            View singleViewProperties = findViewById(R.id.single_view_properties);
-                            singleViewProperties.setVisibility(View.GONE);
-
-                            View error = findViewById(R.id.error_text);
-                            error.setVisibility(View.VISIBLE);
+                            findViewById(R.id.progressBar).setVisibility(View.GONE);
+                            findViewById(R.id.single_view_content).setVisibility(View.VISIBLE);
+                            findViewById(R.id.single_view_properties).setVisibility(View.GONE);
+                            findViewById(R.id.error_text).setVisibility(View.VISIBLE);
+                            findViewById(R.id.favourite).setVisibility(View.GONE);
                         }
                         updateRadioButtons();
 
