@@ -53,8 +53,6 @@ public class MainActivity extends AppCompatActivity {
     ListView simpleListView;
     Boolean isComparing = false;
 
-
-
     String[] titles = {
             "Chillmau",
             "21 Pörfu",
@@ -67,11 +65,11 @@ public class MainActivity extends AppCompatActivity {
     };
 
     String[] descriptions = {
-            "Play Station",
+            "Play Station 4",
             "PC",
             "XBOX",
             "PC",
-            "Play Station",
+            "Play Station 4",
             "Play Station",
             "Play Station",
             "PC"
@@ -95,8 +93,6 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        storeFavourites();
-        loadPlayers();
 
         Intent intent = getIntent();
 
@@ -107,6 +103,12 @@ public class MainActivity extends AppCompatActivity {
         }else{
             isComparing = false;
         }
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        loadPlayers();
     }
 
     private void storeFavourites() {
@@ -121,6 +123,8 @@ public class MainActivity extends AppCompatActivity {
             stringBuilder.append(randomNum);
             stringSet.add(stringBuilder.toString());
         }
+
+        stringSet = null;
 
         SharedPreferences favourites = getSharedPreferences("Favourite", 0);
         SharedPreferences.Editor editor = favourites.edit();

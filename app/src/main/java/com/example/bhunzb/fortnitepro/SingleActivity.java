@@ -1,15 +1,22 @@
 package com.example.bhunzb.fortnitepro;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.graphics.drawable.Drawable;
 import android.support.constraint.ConstraintLayout;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.view.menu.MenuView;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.RadioGroup;
@@ -27,8 +34,11 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
+import java.util.concurrent.ThreadLocalRandom;
 
 import model.Profile;
 import model.StatProperty;
@@ -38,6 +48,8 @@ public class SingleActivity extends AppCompatActivity {
     private String playerName;
     private String platform;
     private Profile profile;
+    private Menu menu;
+    private boolean isFavourite = false;
     private int checkIfGameModeHasChange = 0;
     private int checkIfRadioButtonhasChanged = 0;
 
@@ -73,10 +85,10 @@ public class SingleActivity extends AppCompatActivity {
         actionBar.setTitle(playerName);
         if(platform.equals("") || platform.equals("PC")){
             platform = "pc";
-        }else if(platform.equals("Play Station")){
-            platform = "psn";
         }else if(platform.equals("XBOX")){
             platform = "xbl";
+        }else{
+            platform = "psn";
         }
 
         getPlayer();
@@ -119,28 +131,34 @@ public class SingleActivity extends AppCompatActivity {
 
         RadioGroup radioGroup = findViewById(R.id.radioGroup);
         radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
-
-                    @Override
-                    public void onCheckedChanged(RadioGroup group, int checkedId) {
-                        if(++checkIfRadioButtonhasChanged > 1){
-                            if(checkedId == R.id.radio_button_pc){
-                                platform = "pc";
-                                getPlayer();
-                            }else if(checkedId == R.id.radio_button_ps){
-                                platform = "psn";
-                                getPlayer();
-                            }else if(checkedId == R.id.radio_button_xbox){
-                                platform = "xbl";
-                                getPlayer();
-                            }
-                        }
+            @Override
+            public void onCheckedChanged(RadioGroup group, int checkedId) {
+                if(++checkIfRadioButtonhasChanged > 2){
+                    if(checkedId == R.id.radio_button_pc){
+                        platform = "pc";
+                        getPlayer();
+                    }else if(checkedId == R.id.radio_button_ps){
+                        platform = "psn";
+                        getPlayer();
+                    }else if(checkedId == R.id.radio_button_xbox){
+                        platform = "xbl";
+                        getPlayer();
                     }
-
-                });
+                }
+            }
+        });
 
         initateContent();
     }
 
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.favourite_icon, menu);
+        this.menu = menu;
+        return true;
+    }
 
     private void initateContent(){
         for(int i = 0; i < statsIds.length; i++){
@@ -154,6 +172,54 @@ public class SingleActivity extends AppCompatActivity {
         switch (item.getItemId()) {
             case android.R.id.home:
                 onBackPressed();
+                return true;
+
+            case R.id.favourite:
+                if(isFavourite){
+                    isFavourite = false;
+                    menu.getItem(0).setIcon(ContextCompat.getDrawable(this, R.drawable.add_favourite));
+
+                    Set<String> stringSet = new HashSet<String>();
+
+                    SharedPreferences favourites = getSharedPreferences("Favourite", 0);
+                    Set<String> oldFavouritesStringSet = favourites.getStringSet("element", stringSet);
+
+                    Set<String> newFavouritesStringSet = new HashSet<>();
+
+                    for (String favourite: oldFavouritesStringSet) {
+                        String[] favouriteArray = favourite.split(",");
+                        String name = favouriteArray[0].toLowerCase();
+                        if(!name.equals(profile.epicUserHandle.toLowerCase())){
+                            newFavouritesStringSet.add(favourite);
+                        }
+                    }
+
+                    SharedPreferences.Editor editor = favourites.edit();
+                    editor.clear();
+                    editor.putStringSet("element", newFavouritesStringSet);
+                    editor.commit();
+
+                }else{
+                    isFavourite = true;
+                    menu.getItem(0).setIcon(ContextCompat.getDrawable(this, R.drawable.is_favourite));
+                    Set<String> stringSet = new HashSet<String>();
+
+                    SharedPreferences favourites = getSharedPreferences("Favourite", 0);
+                    Set<String> favouritesStringSet = favourites.getStringSet("element", stringSet);
+                    StringBuilder stringBuilder = new StringBuilder();
+                    stringBuilder.append(this.profile.epicUserHandle);
+                    stringBuilder.append(",");
+                    stringBuilder.append(this.profile.platformNameLong);
+                    stringBuilder.append(",");
+                    int randomNum = ThreadLocalRandom.current().nextInt(0, 6);
+                    stringBuilder.append(randomNum);
+                    favouritesStringSet.add(stringBuilder.toString());
+
+                    SharedPreferences.Editor editor = favourites.edit();
+                    editor.clear();
+                    editor.putStringSet("element", favouritesStringSet);
+                    editor.commit();
+                }
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
@@ -193,6 +259,8 @@ public class SingleActivity extends AppCompatActivity {
 
                             View error = findViewById(R.id.error_text);
                             error.setVisibility(View.GONE);
+
+                            checkIfFavourite();
                             //display function call for displaying stats
 
                         } catch (Exception e) {
@@ -227,6 +295,22 @@ public class SingleActivity extends AppCompatActivity {
 
 // Add the request to the RequestQueue.
         queue.add(stringRequest);
+    }
+
+    private void checkIfFavourite(){
+        Set<String> stringSet = new HashSet<String>();
+
+        SharedPreferences favourites = getSharedPreferences("Favourite", 0);
+        Set<String> favouritesStringSet = favourites.getStringSet("element", stringSet);
+
+        for (String favourite : favouritesStringSet) {
+            String[] favouriteArray = favourite.split(",");
+            String name = favouriteArray[0].toLowerCase();
+            if(name.equals(profile.epicUserHandle.toLowerCase())){
+                menu.getItem(0).setIcon(ContextCompat.getDrawable(this, R.drawable.is_favourite));
+                isFavourite = true;
+            }
+        }
     }
 
     private void updateRadioButtons(){
