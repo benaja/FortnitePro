@@ -3,17 +3,19 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     tools:context=".MainActivity">
 
 
     <ImageView
         android:id="@+id/ItemIcon"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
+        android:layout_width="54dp"
+        android:layout_height="54dp"
+        android:layout_marginBottom="8dp"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="2dp"
+        android:layout_marginTop="8dp"
         android:src="@drawable/character_0"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -22,6 +24,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="9dp"
+        android:layout_marginTop="8dp"
         android:paddingTop="5dp"
         android:textSize="18sp"
         app:layout_constraintStart_toEndOf="@+id/ItemIcon"
@@ -31,12 +34,12 @@
         android:id="@+id/Itemdescription"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
         android:layout_marginStart="9dp"
-        android:layout_marginTop="1dp"
         android:paddingTop="5dp"
         android:textSize="12sp"
         android:textStyle="italic"
-        app:layout_constraintStart_toEndOf="@+id/ItemIcon"
-        app:layout_constraintTop_toBottomOf="@+id/Itemname" />
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/ItemIcon" />
 
 </android.support.constraint.ConstraintLayout>

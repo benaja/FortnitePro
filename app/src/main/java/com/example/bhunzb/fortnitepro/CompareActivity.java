@@ -67,8 +67,6 @@ public class CompareActivity extends AppCompatActivity {
     private String platform;
     private String platform2;
     private int checkIfGameModeHasChange = 0;
-    private int checkIfRadioButtonhasChanged = 0;
-    private int checkIfRadioButtonhasChanged2 = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -111,18 +109,16 @@ public class CompareActivity extends AppCompatActivity {
         radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup group, int checkedId) {
-                if(++checkIfRadioButtonhasChanged > 0){
-                    profile = null;
-                    if(checkedId == R.id.radio_button_pc){
-                        platform = "pc";
-                        getPlayer(playerName, platform);
-                    }else if(checkedId == R.id.radio_button_ps){
-                        platform = "psn";
-                        getPlayer(playerName, platform);
-                    }else if(checkedId == R.id.radio_button_xbox){
-                        platform = "xbl";
-                        getPlayer(playerName, platform);
-                    }
+                profile = null;
+                if(checkedId == R.id.radio_button_pc){
+                    platform = "pc";
+                    getPlayer(playerName, platform);
+                }else if(checkedId == R.id.radio_button_ps){
+                    platform = "psn";
+                    getPlayer(playerName, platform);
+                }else if(checkedId == R.id.radio_button_xbox) {
+                    platform = "xbl";
+                    getPlayer(playerName, platform);
                 }
             }
         });
@@ -131,18 +127,16 @@ public class CompareActivity extends AppCompatActivity {
         radioGroup2.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup group, int checkedId) {
-                if(++checkIfRadioButtonhasChanged2 > 0){
-                    profile2 = null;
-                    if(checkedId == R.id.radio_button_pc){
-                        platform2 = "pc";
-                        getPlayer(playerName2, platform2);
-                    }else if(checkedId == R.id.radio_button_ps){
-                        platform2 = "psn";
-                        getPlayer(playerName2, platform2);
-                    }else if(checkedId == R.id.radio_button_xbox){
-                        platform2 = "xbl";
-                        getPlayer(playerName2, platform2);
-                    }
+                profile2 = null;
+                if(checkedId == R.id.radio_button_pc){
+                    platform2 = "pc";
+                    getPlayer(playerName2, platform2);
+                }else if(checkedId == R.id.radio_button_ps){
+                    platform2 = "psn";
+                    getPlayer(playerName2, platform2);
+                }else if(checkedId == R.id.radio_button_xbox){
+                    platform2 = "xbl";
+                    getPlayer(playerName2, platform2);
                 }
             }
         });
