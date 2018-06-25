@@ -171,7 +171,7 @@ public class MainActivity extends AppCompatActivity {
         if(isComparing){
             intent = new Intent(getApplicationContext(), CompareActivity.class);
             intent.putExtra("player_name_to_compare", newProfile);
-            intent.putExtra("platform_to_compare", "");
+            intent.putExtra("platform_to_compare", newPlatform);
             intent.putExtra("player_name", player_name);
             intent.putExtra("platform", platform);
         }else{
