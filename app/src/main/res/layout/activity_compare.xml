@@ -215,7 +215,7 @@
                     android:layout_height="wrap_content"
                     android:layout_alignParentStart="true"
                     android:layout_marginStart="18dp"
-                    android:entries="@array/spinnerItems"
+                    android:entries="@array/gameModes"
                     android:padding="5dp"
                     android:prompt="@string/app_name"
                     android:spinnerMode="dropdown"

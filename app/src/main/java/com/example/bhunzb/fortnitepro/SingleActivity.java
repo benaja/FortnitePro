@@ -83,13 +83,7 @@ public class SingleActivity extends AppCompatActivity {
         playerName = intent.getStringExtra("player_name");
         platform = intent.getStringExtra("platform");
         actionBar.setTitle(playerName);
-        if(platform.equals("") || platform.equals("PC")){
-            platform = "pc";
-        }else if(platform.equals("XBOX")){
-            platform = "xbl";
-        }else{
-            platform = "psn";
-        }
+        convertPlatform();
 
         getPlayer();
 
@@ -105,15 +99,7 @@ public class SingleActivity extends AppCompatActivity {
             }
         });
 
-        //get the spinner from the xml.
         Spinner dropdown = findViewById(R.id.select_game_type);
-        //create a list of items for the spinner.
-        String[] items = new String[]{"Solo", "Duo", "Squad"};
-        //create an adapter to describe how the items are displayed, adapters are used in several places in android.
-        //There are multiple variations of this, but this is the basic variant.
-        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, items);
-        //set the spinners adapter to the previously created one.
-        dropdown.setAdapter(adapter);
         dropdown.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view,
@@ -151,6 +137,16 @@ public class SingleActivity extends AppCompatActivity {
         initateContent();
     }
 
+    private void convertPlatform(){
+        if(platform.equals("") || platform.equals("PC")){
+            platform = "pc";
+        }else if(platform.equals("XBOX")){
+            platform = "xbl";
+        }else{
+            platform = "psn";
+        }
+    }
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -175,50 +171,52 @@ public class SingleActivity extends AppCompatActivity {
                 return true;
 
             case R.id.favourite:
-                if(isFavourite){
-                    isFavourite = false;
-                    menu.getItem(0).setIcon(ContextCompat.getDrawable(this, R.drawable.add_favourite));
+                if(profile != null){
+                    if(isFavourite){
+                        isFavourite = false;
+                        menu.getItem(0).setIcon(ContextCompat.getDrawable(this, R.drawable.add_favourite));
 
-                    Set<String> stringSet = new HashSet<String>();
+                        Set<String> stringSet = new HashSet<String>();
 
-                    SharedPreferences favourites = getSharedPreferences("Favourite", 0);
-                    Set<String> oldFavouritesStringSet = favourites.getStringSet("element", stringSet);
+                        SharedPreferences favourites = getSharedPreferences("Favourite", 0);
+                        Set<String> oldFavouritesStringSet = favourites.getStringSet("element", stringSet);
 
-                    Set<String> newFavouritesStringSet = new HashSet<>();
+                        Set<String> newFavouritesStringSet = new HashSet<>();
 
-                    for (String favourite: oldFavouritesStringSet) {
-                        String[] favouriteArray = favourite.split(",");
-                        String name = favouriteArray[0].toLowerCase();
-                        if(!name.equals(profile.epicUserHandle.toLowerCase())){
-                            newFavouritesStringSet.add(favourite);
+                        for (String favourite: oldFavouritesStringSet) {
+                            String[] favouriteArray = favourite.split(",");
+                            String name = favouriteArray[0].toLowerCase();
+                            if(!name.equals(profile.epicUserHandle.toLowerCase())){
+                                newFavouritesStringSet.add(favourite);
+                            }
                         }
+
+                        SharedPreferences.Editor editor = favourites.edit();
+                        editor.clear();
+                        editor.putStringSet("element", newFavouritesStringSet);
+                        editor.commit();
+
+                    }else{
+                        isFavourite = true;
+                        menu.getItem(0).setIcon(ContextCompat.getDrawable(this, R.drawable.is_favourite));
+                        Set<String> stringSet = new HashSet<String>();
+
+                        SharedPreferences favourites = getSharedPreferences("Favourite", 0);
+                        Set<String> favouritesStringSet = favourites.getStringSet("element", stringSet);
+                        StringBuilder stringBuilder = new StringBuilder();
+                        stringBuilder.append(this.profile.epicUserHandle);
+                        stringBuilder.append(",");
+                        stringBuilder.append(this.profile.platformNameLong);
+                        stringBuilder.append(",");
+                        int randomNum = ThreadLocalRandom.current().nextInt(0, 12);
+                        stringBuilder.append(randomNum);
+                        favouritesStringSet.add(stringBuilder.toString());
+
+                        SharedPreferences.Editor editor = favourites.edit();
+                        editor.clear();
+                        editor.putStringSet("element", favouritesStringSet);
+                        editor.commit();
                     }
-
-                    SharedPreferences.Editor editor = favourites.edit();
-                    editor.clear();
-                    editor.putStringSet("element", newFavouritesStringSet);
-                    editor.commit();
-
-                }else{
-                    isFavourite = true;
-                    menu.getItem(0).setIcon(ContextCompat.getDrawable(this, R.drawable.is_favourite));
-                    Set<String> stringSet = new HashSet<String>();
-
-                    SharedPreferences favourites = getSharedPreferences("Favourite", 0);
-                    Set<String> favouritesStringSet = favourites.getStringSet("element", stringSet);
-                    StringBuilder stringBuilder = new StringBuilder();
-                    stringBuilder.append(this.profile.epicUserHandle);
-                    stringBuilder.append(",");
-                    stringBuilder.append(this.profile.platformNameLong);
-                    stringBuilder.append(",");
-                    int randomNum = ThreadLocalRandom.current().nextInt(0, 12);
-                    stringBuilder.append(randomNum);
-                    favouritesStringSet.add(stringBuilder.toString());
-
-                    SharedPreferences.Editor editor = favourites.edit();
-                    editor.clear();
-                    editor.putStringSet("element", favouritesStringSet);
-                    editor.commit();
                 }
                 return true;
             default:

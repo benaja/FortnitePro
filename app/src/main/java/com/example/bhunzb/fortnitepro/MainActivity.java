@@ -52,28 +52,8 @@ import model.Profile;
 public class MainActivity extends AppCompatActivity {
     ListView simpleListView;
     Boolean isComparing = false;
-
-    String[] titles = {
-            "Chillmau",
-            "21 Pörfu",
-            "Global",
-            "FireFox",
-            "UC Browser",
-            "Android Folder",
-            "VLC Player",
-            "Cold War"
-    };
-
-    String[] descriptions = {
-            "Play Station 4",
-            "PC",
-            "XBOX",
-            "PC",
-            "Play Station 4",
-            "Play Station",
-            "Play Station",
-            "PC"
-    };
+    String player_name;
+    String platform;
 
     int[] pictures = {
             R.drawable.character_4,
@@ -89,10 +69,6 @@ public class MainActivity extends AppCompatActivity {
             R.drawable.character_14,
             R.drawable.character_15
     };
-
-    String player_name;
-    String platform;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -147,27 +123,11 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view,
                                     int position, long id) {
-
-                Intent intent;  //TextView textView = (TextView) view.findViewById(R.id.list_view);
                 TextView textView = (TextView)view.findViewById(R.id.Itemname);
-                String text = textView.getText().toString();
+                String newPlayer = textView.getText().toString();
                 String newPlatform = ((TextView) view.findViewById(R.id.Itemdescription)).getText().toString();
 
-                if(isComparing){
-                    intent = new Intent(getApplicationContext(), CompareActivity.class);
-                    intent.putExtra("player_name_to_compare", text);
-                    intent.putExtra("platform_to_compare", newPlatform);
-                    intent.putExtra("player_name", player_name);
-                    intent.putExtra("platform", platform);
-                }else{
-                    intent = new Intent(getApplicationContext(), SingleActivity.class);
-                    intent.putExtra("player_name", text);
-                    intent.putExtra("platform", newPlatform);
-                }
-                //TextView textView = (TextView) view.findViewById(R.id.list_view);
-
-                startActivity(intent);
-
+                passToApiRequestPlayer(newPlayer, newPlatform);
             }
         });
     }
@@ -187,39 +147,38 @@ public class MainActivity extends AppCompatActivity {
             sv.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
                 @Override
                 public boolean onQueryTextChange(String newText) {
-                    //No needed
+                    //Nod needed
                     return true;
                 }
 
                 @Override
-                public boolean onQueryTextSubmit(String query) {
-                    if (query != null) {
-                        passToApirequestPlayer(query);
+                public boolean onQueryTextSubmit(String searchQuery) {
+                    if (searchQuery != null) {
+                        passToApiRequestPlayer(searchQuery, "");
                     }
                     return true;
                 }
             });
         } else {
             Toast.makeText(getApplicationContext(),
-                    "search object null", Toast.LENGTH_SHORT).show();
+                    "Such Objekt nicht definiert!", Toast.LENGTH_SHORT).show();
         }
         return true;
     }
 
-    private void passToApirequestPlayer(String searchPlayer) {
-        Intent intent;  //TextView textView = (TextView) view.findViewById(R.id.list_view);
+    private void passToApiRequestPlayer(String newProfile, String newPlatform) {
+        Intent intent;
         if(isComparing){
             intent = new Intent(getApplicationContext(), CompareActivity.class);
-            intent.putExtra("player_name_to_compare", searchPlayer);
+            intent.putExtra("player_name_to_compare", newProfile);
             intent.putExtra("platform_to_compare", "");
             intent.putExtra("player_name", player_name);
             intent.putExtra("platform", platform);
         }else{
             intent = new Intent(getApplicationContext(), SingleActivity.class);
-            intent.putExtra("player_name", searchPlayer);
-            intent.putExtra("platform", "");
+            intent.putExtra("player_name", newProfile);
+            intent.putExtra("platform", newPlatform);
         }
-        //TextView textView = (TextView) view.findViewById(R.id.list_view);
 
         startActivity(intent);
     }

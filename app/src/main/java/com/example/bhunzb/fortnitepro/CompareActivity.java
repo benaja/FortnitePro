@@ -31,6 +31,13 @@ import model.Profile;
 import model.StatProperty;
 
 public class CompareActivity extends AppCompatActivity {
+    private Profile profile2;
+    private Profile profile;
+    private String playerName;
+    private String playerName2;
+    private String platform;
+    private String platform2;
+    private int checkIfGameModeHasChange = 0;
 
     int[] statsIdsProfile = {
             R.id.percent_Wins,
@@ -50,9 +57,6 @@ public class CompareActivity extends AppCompatActivity {
             R.id.percent_KPM2,
     };
 
-    Profile profile2;
-    Profile profile;
-
     String[] statsname = {
             "WINS",
             "WINS %",
@@ -61,12 +65,6 @@ public class CompareActivity extends AppCompatActivity {
             "KD",
             "KILLS / MATCH",
     };
-
-    private String playerName;
-    private String playerName2;
-    private String platform;
-    private String platform2;
-    private int checkIfGameModeHasChange = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -95,8 +93,8 @@ public class CompareActivity extends AppCompatActivity {
             public void onItemSelected(AdapterView<?> parent, View view,
                                        int position, long id) {
                 if(++checkIfGameModeHasChange > 1){
-                    updateProfile1();
-                    updateProfile2();
+                    updatePropertys(profile, statsIdsProfile);
+                    updatePropertys(profile2, statsIdsProfile2);
                 }
             }
 
@@ -230,7 +228,7 @@ public class CompareActivity extends AppCompatActivity {
                 findViewById(R.id.error_player_1).setVisibility(View.VISIBLE);
                 findViewById(R.id.error_player_2).setVisibility(View.VISIBLE);
             }else if(profile != null && profile2 == null){
-                updateProfile1();
+                updatePropertys(profile, statsIdsProfile);
                 TextView titleName = findViewById(R.id.playerName2);
                 titleName.setText(playerName2);
                 findViewById(R.id.stats_player_2).setVisibility(View.GONE);
@@ -243,21 +241,13 @@ public class CompareActivity extends AppCompatActivity {
     }
 
     private void initiatePropertys() {
-        updateProfile2();
-        updateProfile1();
-    }
+        TextView titleName = findViewById(R.id.playerName1);
+        titleName.setText(profile.epicUserHandle);
 
-    private void updateProfile1(){
-        TextView titleName2 = findViewById(R.id.playerName1);
-        titleName2.setText(profile.epicUserHandle);
-
-        updatePropertys(profile, statsIdsProfile);
-    }
-
-    private void updateProfile2(){
         TextView titleName2 = findViewById(R.id.playerName2);
         titleName2.setText(profile2.epicUserHandle);
 
+        updatePropertys(profile, statsIdsProfile);
         updatePropertys(profile2, statsIdsProfile2);
     }
 
