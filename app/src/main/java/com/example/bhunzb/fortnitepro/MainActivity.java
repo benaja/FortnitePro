@@ -121,27 +121,6 @@ public class MainActivity extends AppCompatActivity {
         loadPlayers();
     }
 
-    private void storeFavourites() {
-        Set<String> stringSet = new HashSet<String>();
-        for (int i = 0; i < titles.length; i++) {
-            StringBuilder stringBuilder = new StringBuilder();
-            stringBuilder.append(titles[i]);
-            stringBuilder.append(",");
-            stringBuilder.append(descriptions[i]);
-            stringBuilder.append(",");
-            int randomNum = ThreadLocalRandom.current().nextInt(0, 6);
-            stringBuilder.append(randomNum);
-            stringSet.add(stringBuilder.toString());
-        }
-
-        stringSet = null;
-
-        SharedPreferences favourites = getSharedPreferences("Favourite", 0);
-        SharedPreferences.Editor editor = favourites.edit();
-        editor.putStringSet("element", stringSet);
-        editor.commit();
-    }
-
     private void loadPlayers() {
         Set<String> stringSet = new HashSet<String>();
 
