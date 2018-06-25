@@ -254,10 +254,15 @@ public class SingleActivity extends AppCompatActivity {
                             findViewById(R.id.progressBar).setVisibility(View.GONE);
                             findViewById(R.id.single_view_content).setVisibility(View.VISIBLE);
                             findViewById(R.id.single_view_properties).setVisibility(View.VISIBLE);
+                            findViewById(R.id.stats_content).setVisibility(View.VISIBLE);
+                            findViewById(R.id.error_platform_not_found).setVisibility(View.GONE);
                             findViewById(R.id.error_text).setVisibility(View.GONE);
                             findViewById(R.id.favourite).setVisibility(View.VISIBLE);
 
+
+                            searchOnOtherPlatforms = false;
                             checkIfFavourite();
+                            updateRadioButtons();
                             //display function call for displaying stats
 
                         } catch (Exception e) {
@@ -267,18 +272,27 @@ public class SingleActivity extends AppCompatActivity {
                                     getPlayer();
                                 }else if(platform.equals("psn")){
                                     platform = "xbl";
-                                    searchOnOtherPlatforms = false;
                                     getPlayer();
+                                }else if(platform.equals("xbl")){
+                                    findViewById(R.id.progressBar).setVisibility(View.GONE);
+                                    findViewById(R.id.single_view_content).setVisibility(View.VISIBLE);
+                                    findViewById(R.id.single_view_properties).setVisibility(View.GONE);
+                                    findViewById(R.id.error_text).setVisibility(View.VISIBLE);
+                                    findViewById(R.id.favourite).setVisibility(View.GONE);
+                                    searchOnOtherPlatforms = false;
                                 }
                             }else{
                                 findViewById(R.id.progressBar).setVisibility(View.GONE);
                                 findViewById(R.id.single_view_content).setVisibility(View.VISIBLE);
-                                findViewById(R.id.single_view_properties).setVisibility(View.GONE);
-                                findViewById(R.id.error_text).setVisibility(View.VISIBLE);
+                                findViewById(R.id.single_view_properties).setVisibility(View.VISIBLE);
+                                findViewById(R.id.stats_content).setVisibility(View.GONE);
+                                findViewById(R.id.error_platform_not_found).setVisibility(View.VISIBLE);
+                                findViewById(R.id.radioGroup).setVisibility(View.VISIBLE);
+                                findViewById(R.id.error_text).setVisibility(View.GONE);
                                 findViewById(R.id.favourite).setVisibility(View.GONE);
+                                updateRadioButtons();
                             }
                         }
-                        updateRadioButtons();
 
                     }
                 }, new Response.ErrorListener() {
