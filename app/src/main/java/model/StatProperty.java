@@ -15,7 +15,8 @@ public class StatProperty {
 
     public int rank;
 
-    public int percentile;
+
+    public double percentile;
 
     public String displayValue;
 }

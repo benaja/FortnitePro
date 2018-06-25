@@ -38,6 +38,5 @@ public class FavouriteListAdapter extends ArrayAdapter<String>{
         imageView.setImageResource(imgid.get(position));
         txtDescription.setText(description.get(position));
         return rowView;
-
     };
 }

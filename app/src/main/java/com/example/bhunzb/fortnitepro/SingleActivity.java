@@ -211,7 +211,7 @@ public class SingleActivity extends AppCompatActivity {
                     stringBuilder.append(",");
                     stringBuilder.append(this.profile.platformNameLong);
                     stringBuilder.append(",");
-                    int randomNum = ThreadLocalRandom.current().nextInt(0, 6);
+                    int randomNum = ThreadLocalRandom.current().nextInt(0, 12);
                     stringBuilder.append(randomNum);
                     favouritesStringSet.add(stringBuilder.toString());
 
@@ -357,6 +357,7 @@ public class SingleActivity extends AppCompatActivity {
             double width = backgroundBar.getLayoutParams().width;
 
             double currentWidth;
+            double percentile = values.get(i).percentile;
             if(values.get(i).percentile == 0.0){
                 currentWidth = 1;
             }else{

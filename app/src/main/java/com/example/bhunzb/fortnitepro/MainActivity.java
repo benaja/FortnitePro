@@ -76,13 +76,18 @@ public class MainActivity extends AppCompatActivity {
     };
 
     int[] pictures = {
-            R.drawable.character_0,
-            R.drawable.character_1,
-            R.drawable.character_2,
-            R.drawable.character_3,
             R.drawable.character_4,
             R.drawable.character_5,
             R.drawable.character_6,
+            R.drawable.character_7,
+            R.drawable.character_8,
+            R.drawable.character_9,
+            R.drawable.character_10,
+            R.drawable.character_11,
+            R.drawable.character_12,
+            R.drawable.character_13,
+            R.drawable.character_14,
+            R.drawable.character_15
     };
 
     String player_name;

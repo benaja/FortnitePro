@@ -95,7 +95,8 @@ public class CompareActivity extends AppCompatActivity {
             public void onItemSelected(AdapterView<?> parent, View view,
                                        int position, long id) {
                 if(++checkIfGameModeHasChange > 1){
-                    updatePropertys(position);
+                    updateProfile1();
+                    updateProfile2();
                 }
             }
 
@@ -142,12 +143,6 @@ public class CompareActivity extends AppCompatActivity {
         });
 
         getPlayer(playerName, platform);
-    }
-
-    @Override
-    public void onBackPressed() {
-        Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-        startActivity(intent);
     }
 
     private void convertPlatforms(){
@@ -235,6 +230,9 @@ public class CompareActivity extends AppCompatActivity {
                 findViewById(R.id.error_player_1).setVisibility(View.VISIBLE);
                 findViewById(R.id.error_player_2).setVisibility(View.VISIBLE);
             }else if(profile != null && profile2 == null){
+                updateProfile1();
+                TextView titleName = findViewById(R.id.playerName2);
+                titleName.setText(playerName2);
                 findViewById(R.id.stats_player_2).setVisibility(View.GONE);
                 findViewById(R.id.error_player_2).setVisibility(View.VISIBLE);
             }else{
@@ -245,32 +243,38 @@ public class CompareActivity extends AppCompatActivity {
     }
 
     private void initiatePropertys() {
-        TextView titleName = findViewById(R.id.playerName1);
-        TextView titleName2 = findViewById(R.id.playerName2);
-        titleName.setText(profile.epicUserHandle);
-        titleName2.setText(profile2.epicUserHandle);
-        Spinner dropdown = findViewById(R.id.select_game_type);
-        int selectedRadioButtonId = dropdown.getSelectedItemPosition();
-        updatePropertys(selectedRadioButtonId);
+        updateProfile2();
+        updateProfile1();
     }
 
-    private void updatePropertys(int gameType){
+    private void updateProfile1(){
+        TextView titleName2 = findViewById(R.id.playerName1);
+        titleName2.setText(profile.epicUserHandle);
+
+        updatePropertys(profile, statsIdsProfile);
+    }
+
+    private void updateProfile2(){
+        TextView titleName2 = findViewById(R.id.playerName2);
+        titleName2.setText(profile2.epicUserHandle);
+
+        updatePropertys(profile2, statsIdsProfile2);
+    }
+
+    private void updatePropertys(Profile profile, int[] statsIdsProfile){
+        Spinner dropdown = findViewById(R.id.select_game_type);
+        int gameType = dropdown.getSelectedItemPosition();
         List<StatProperty> values = new ArrayList<>();
-        List<StatProperty> values2 = new ArrayList<>();
         if(gameType == 0){
             values = getValuesOfSolo(profile, R.id.percent_TOP10);
-            values2 = getValuesOfSolo(profile2, R.id.percent_TOP10_2);
         }else if(gameType == 1){
             values = getValuesOfDuo(profile, R.id.percent_TOP10);
-            values2 = getValuesOfDuo(profile2, R.id.percent_TOP10_2);
         }else{
             values = getValuesOfSquad(profile, R.id.percent_TOP10);
-            values2 = getValuesOfSquad(profile2, R.id.percent_TOP10_2);
         }
 
         for(int i = 0; i < values.size(); i++){
             setPlayerStats(values.get(i), statsIdsProfile[i]);
-            setPlayerStats(values2.get(i), statsIdsProfile2[i]);
         }
     }
 
