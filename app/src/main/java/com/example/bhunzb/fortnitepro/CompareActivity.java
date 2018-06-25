@@ -252,19 +252,21 @@ public class CompareActivity extends AppCompatActivity {
     }
 
     private void updatePropertys(Profile profile, int[] statsIdsProfile){
-        Spinner dropdown = findViewById(R.id.select_game_type);
-        int gameType = dropdown.getSelectedItemPosition();
-        List<StatProperty> values = new ArrayList<>();
-        if(gameType == 0){
-            values = getValuesOfSolo(profile, R.id.percent_TOP10);
-        }else if(gameType == 1){
-            values = getValuesOfDuo(profile, R.id.percent_TOP10);
-        }else{
-            values = getValuesOfSquad(profile, R.id.percent_TOP10);
-        }
+        if(profile != null){
+            Spinner dropdown = findViewById(R.id.select_game_type);
+            int gameType = dropdown.getSelectedItemPosition();
+            List<StatProperty> values = new ArrayList<>();
+            if(gameType == 0){
+                values = getValuesOfSolo(profile, R.id.percent_TOP10);
+            }else if(gameType == 1){
+                values = getValuesOfDuo(profile, R.id.percent_TOP10);
+            }else{
+                values = getValuesOfSquad(profile, R.id.percent_TOP10);
+            }
 
-        for(int i = 0; i < values.size(); i++){
-            setPlayerStats(values.get(i), statsIdsProfile[i]);
+            for(int i = 0; i < values.size(); i++){
+                setPlayerStats(values.get(i), statsIdsProfile[i]);
+            }
         }
     }
 
