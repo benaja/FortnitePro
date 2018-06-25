@@ -52,6 +52,7 @@ public class SingleActivity extends AppCompatActivity {
     private boolean isFavourite = false;
     private int checkIfGameModeHasChange = 0;
     private int checkIfRadioButtonhasChanged = 0;
+    private boolean searchOnOtherPlatforms = false;
 
     int[] statsIds = {
             R.id.wins,
@@ -138,7 +139,11 @@ public class SingleActivity extends AppCompatActivity {
     }
 
     private void convertPlatform(){
-        if(platform.equals("") || platform.equals("PC")){
+        if(platform.equals("")){
+            platform = "pc";
+            searchOnOtherPlatforms = true;
+        }
+        else if(platform.equals("PC")){
             platform = "pc";
         }else if(platform.equals("XBOX")){
             platform = "xbl";
@@ -256,11 +261,22 @@ public class SingleActivity extends AppCompatActivity {
                             //display function call for displaying stats
 
                         } catch (Exception e) {
-                            findViewById(R.id.progressBar).setVisibility(View.GONE);
-                            findViewById(R.id.single_view_content).setVisibility(View.VISIBLE);
-                            findViewById(R.id.single_view_properties).setVisibility(View.GONE);
-                            findViewById(R.id.error_text).setVisibility(View.VISIBLE);
-                            findViewById(R.id.favourite).setVisibility(View.GONE);
+                            if(searchOnOtherPlatforms){
+                                if(platform.equals("pc")){
+                                    platform = "psn";
+                                    getPlayer();
+                                }else if(platform.equals("psn")){
+                                    platform = "xbl";
+                                    searchOnOtherPlatforms = false;
+                                    getPlayer();
+                                }
+                            }else{
+                                findViewById(R.id.progressBar).setVisibility(View.GONE);
+                                findViewById(R.id.single_view_content).setVisibility(View.VISIBLE);
+                                findViewById(R.id.single_view_properties).setVisibility(View.GONE);
+                                findViewById(R.id.error_text).setVisibility(View.VISIBLE);
+                                findViewById(R.id.favourite).setVisibility(View.GONE);
+                            }
                         }
                         updateRadioButtons();
 
